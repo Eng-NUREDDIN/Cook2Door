@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const dishSchema = new mongoose.Schema ({
-    dish_name:{
+    dish_name: {
         type: String,
         require: true
     },
-    dish_ingredient:{
+    dish_ingredient: {
         type: String,
         require: true
     },
@@ -13,8 +13,14 @@ const dishSchema = new mongoose.Schema ({
         type: mongoose.Schema.Types.ObjectId,
         // changed it based on the name which is decided for cook Schema
         ref: 'cookSchema'
-    }
-
+    },
+    /**
+     * for future
+     */
+    // dish_photo: {
+    //     type: String,
+    //     require: false
+    // },
 })
 
 module.exports = mongoose.model('dishSchema', dishSchema)
