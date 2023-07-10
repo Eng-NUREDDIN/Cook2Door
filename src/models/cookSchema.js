@@ -14,7 +14,12 @@ const cookSchema = mongoose.Schema({
   },
   cook_name: {
     type: String,
+    required: true,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now(),
   },
 });
 
-module.exports = mongoose.model('Cook', cookSchema);
+module.exports = mongoose.model('CookSchema', cookSchema);

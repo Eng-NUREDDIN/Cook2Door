@@ -1,8 +1,8 @@
-const express = require('express')
-const db = require('./connection/db')
-require('dotenv').config()
+const express = require('express');
+const db = require('./connection/db');
+require('dotenv').config();
 
-const app = express()
+const app = express();
 
-const uri = process.env.DATABASE_URI
-db.connect(uri)
+const uri = process.env.DATABASE_URI;
+db.connect(uri);
