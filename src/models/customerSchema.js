@@ -2,10 +2,6 @@
 const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema({
-  customer_id: {
-    type: Number,
-    required: true,
-  },
   customer_email: {
     type: String,
     required: true,
@@ -28,12 +24,12 @@ const customerSchema = new mongoose.Schema({
   },
   provider: {
     type: String,
-    required: true,
+    required: false,
   },
   provider_id: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
-module.exports = mongoose.model("Customer", customerSchema);
+module.exports = mongoose.model("customerSchema", customerSchema);
