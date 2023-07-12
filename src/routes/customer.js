@@ -1,13 +1,14 @@
-const express = require("express");
+const express = require('express');
+
 const router = express.Router();
 
-const customerController = require('../controllers/customerController')
-const {validCustomer} = require('../validation/validator')
+const customerController = require('../controllers/customerController');
+const { validCustomer } = require('../validation/validator');
 
-router.get('/', customerController.getAllCustomers)
-router.post('/', validCustomer, customerController.addCustomer)
-router.get('/:id', customerController.getCustomerById)
-router.put('/:id', customerController.updateCustomer)
-router.delete('/id', customerController.removeCustomer)
+router.get('/', customerController.getAllCustomers);
+router.post('/', validCustomer, customerController.addCustomer);
+router.get('/:id', customerController.getCustomerById);
+router.put('/:id', customerController.updateCustomer);
+router.delete('/id', customerController.removeCustomer);
 
 module.exports = router;
