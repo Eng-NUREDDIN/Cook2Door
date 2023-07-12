@@ -21,6 +21,8 @@
     "express-validator": "^7.0.1",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "yarn-upgrade-all": "^0.6.1"
   },
   "devDependencies": {

@@ -1,4 +1,6 @@
 const dishSchema = require('../models/dishSchema')
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 const axios = require('axios')
 
 /**
@@ -61,11 +63,17 @@ async function addDish (req, res) {
  */
 async function getDishById (req, res) {
 
+    // Extract dish id from the request parameters
+    const { id } = req.params;
+
+    // For in valid Id
+    if (!ObjectId.isValid(id)) {
+        res.status(400).json({ message: 'Invalid dish ID' });
+        return;
+    }
+
     try {
-
-        // Extract dish id from the request parameters
-        const { id } = req.params;
-
+        
         // Find the dish by id
         const dish = await dishSchema.findById(id);
 
@@ -89,10 +97,16 @@ async function getDishById (req, res) {
  */
 async function removeDish (req, res) {
 
-    try {
+    // Extract dish id from the request parameters
+    const { id } = req.params;
 
-        // Extract dish id from the request parameters
-        const { id } = req.params;
+    // For in valid Id
+    if (!ObjectId.isValid(id)) {
+        res.status(400).json({ message: 'Invalid dish ID' });
+        return;
+    }
+
+    try {
     
         // Find and remove the dish by id
         const removedDish = await dishSchema.findByIdAndRemove(id);
@@ -117,10 +131,16 @@ async function removeDish (req, res) {
  */
 async function updateDish (req, res) {
 
-     try {
+    // Extract dish id from the request parameters
+    const { id } = req.params;
 
-        // Extract dish id from the request parameters
-        const { id } = req.params;
+    // For in valid Id
+    if (!ObjectId.isValid(id)) {
+        res.status(400).json({ message: 'Invalid dish ID' });
+        return;
+    }
+
+     try {
 
         // Extract updated dish data from the request body
         const { dish_name, dish_ingredient }= req.body         

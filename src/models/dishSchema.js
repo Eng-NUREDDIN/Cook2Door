@@ -9,12 +9,12 @@ const dishSchema = new mongoose.Schema ({
         type: String,
         required: true
     },
-    // cook_id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: false,
-    //     // changed it based on the name which is decided for cook Schema6
-    //     ref: 'cookSchema'
-    // },
+    cook_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        // changed it based on the name which is decided for cook Schema6
+        ref: 'cookSchema'
+    },
 })
 
 module.exports = mongoose.model('dishSchema', dishSchema)
