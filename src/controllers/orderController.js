@@ -3,6 +3,9 @@
  * and pulled intpo the repository and delete this comment
  */
 const orderSchema = require('../models/orderSchema')
+const customerSchema = require('../models/customerSchema');
+const dishSchema = require('../models/dishSchema');
+
 
 /**
  * This return all Orders 
@@ -34,6 +37,17 @@ async function addOrder (req, res) {
     const { dish_id, customer_id, order_description } = req.body;
 
   try {
+    // Check if the customer exists
+    const customer = await customerSchema.findById(customer_id);
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    // Check if the dish exists
+    const dish = await dishSchema.findById(dish_id);
+    if (!dish) {
+      return res.status(404).json({ message: 'Dish not found' });
+    }
      // Creates a new order instance using the orderSchema and the provided request body
     const newOrder = new orderSchema({
       dish_id,
