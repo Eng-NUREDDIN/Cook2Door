@@ -3,23 +3,17 @@ const mongoose = require('mongoose');
 const dishSchema = new mongoose.Schema ({
     dish_name: {
         type: String,
-        require: true
+        required: true
     },
     dish_ingredient: {
         type: String,
-        require: true
+        required: true
     },
-    cook: {
-        type: mongoose.Schema.Types.ObjectId,
-        // changed it based on the name which is decided for cook Schema
-        ref: 'cookSchema'
-    },
-    /**
-     * for future
-     */
-    // dish_photo: {
-    //     type: String,
-    //     require: false
+    // cook_id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: false,
+    //     // changed it based on the name which is decided for cook Schema6
+    //     ref: 'cookSchema'
     // },
 })
 
