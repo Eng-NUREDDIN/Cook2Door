@@ -1,4 +1,5 @@
 const dishSchema = require('../models/dishSchema')
+const axios = require('axios')
 
 /**
  * This return all Dishs 
@@ -26,11 +27,20 @@ async function addDish (req, res) {
         // Extract dish data from the request body
         const { dish_name, dish_ingredient, cook_id}= req.body
 
-        
+        // Check the cook_ids
+        const response = await axios.get(`http://localhost:3000/api/cook/${cook_id}`);
+        const cook = response.data;
+
+        // If cook is not found, handle the error
+        if (!cook) {
+            return res.status(404).json({ error: 'Cook not found' });
+        }
+
         // Create a new dish instance
         const newDish = new dishSchema ({
             dish_name,
-            dish_ingredient
+            dish_ingredient,
+            cook_id: cook._id, // Assign the correct cook_id
         })
         
         // Save the customer to the database
@@ -62,7 +72,7 @@ async function getDishById (req, res) {
         // Check if dish exists
         if (!dish) {
             res.status(404).json({ message: "Dish not found" });
-        return;
+            return;
         }
         res.status(200).json(dish);
 
