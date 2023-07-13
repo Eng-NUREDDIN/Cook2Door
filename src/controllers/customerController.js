@@ -1,4 +1,19 @@
+
 const customerSchema = require('../models/customerSchema');
+
+/**
+ * Get all Customers
+ * @param {*} req 
+ * @param {*} res 
+ */
+async function getAllCustomers(req, res) {
+  try {
+    const customers = await customerSchema.find();
+    res.status(200).json(customers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
 /**
  * Add a new Customer to the Customer schema
@@ -9,7 +24,7 @@ async function addCustomer(req, res) {
   try {
     // Extract customer data from the request body
     const { customer_email, customer_name, customer_address, birthdate, password } = req.body;
-    
+
     // Check if customer with the same email already exists
     const existingCustomer = await customerSchema.findOne({ customer_email });
     if (existingCustomer) {
@@ -35,16 +50,51 @@ async function addCustomer(req, res) {
 }
 
 /**
+ * Get Customer by its id
+ * @param {*} req 
+ * @param {*} res 
+ */
+async function getCustomerById(req, res) {
+  try {
+    const { id } = req.params;
+    const customer = await customerSchema.findById(id);
+    if (!customer) {
+      res.status(404).json({ message: "Customer not found" });
+      return;
+    }
+    res.status(200).json(customer);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+/**
+ * Remove the Customer based on the id
+ * @param {*} req 
+ * @param {*} res 
+ */
+async function removeCustomer(req, res) {
+  try {
+    const { id } = req.params;
+    const removedCustomer = await customerSchema.findByIdAndRemove(id);
+    if (!removedCustomer) {
+      res.status(404).json({ message: "Customer not found" });
+      return;
+    }
+    res.status(200).json({ message: "Customer removed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+/**
  * Update the Customer based on its id
  * @param {*} req 
  * @param {*} res 
  */
 async function updateCustomer(req, res) {
   try {
-    // Extract customer id from the request parameters
     const { id } = req.params;
-    
-    // Extract updated customer data from the request body
     const { customer_email, customer_name, customer_address, birthdate, password } = req.body;
 
     // Create an object with the updated fields
@@ -70,27 +120,10 @@ async function updateCustomer(req, res) {
   }
 }
 
-/**
- * Get Customer by its id
- * @param {*} req 
- * @param {*} res 
- */
-async function getCustomerById(req, res) {
-  try {
-    const { id } = req.params;
-    const customer = await customerSchema.findById(id);
-    if (!customer) {
-      res.status(404).json({ message: "Customer not found" });
-      return;
-    }
-    res.status(200).json(customer);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 module.exports = {
-  addCustomer,
-  updateCustomer,
-  getCustomerById
+  getAllCustomers, // Retrieves all customers from the database
+  addCustomer, // Adds a new customer to the database
+  getCustomerById, // Retrieves a customer by their ID
+  removeCustomer, // Removes a customer from the database by their ID
+  updateCustomer // Updates a customer in the database by their ID
 };
