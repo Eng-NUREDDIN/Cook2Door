@@ -6,7 +6,7 @@ const cookController = require('../controllers/cookController');
 const { validCook } = require('../validation/validator');
 
 router.get('/', cookController.getAllCooks);
-router.post('/add', validCook, cookController.addCook);
+router.post('/add',cookController.addCook);
 router.get('/:id', cookController.getCookById);
 router.put('/:id', cookController.updateCook);
 router.delete('/:id', cookController.removeCook);

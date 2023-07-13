@@ -21,6 +21,12 @@ const cookSchema = mongoose.Schema({
     maxLength: [30, 'Cook name should not be more than 30 characters.'],
     minLength: [3, 'Cook name should not be less than 3 characters.'],
   },
+  'cooker_id ': {
+    //type: mongoose.Schema.Types.ObjectId,
+    //ref: 'UserSchema',
+    type: String,
+    required: [true, 'Cooker id is required.'],
+  },
   created_at: {
     type: Date,
     default: Date.now(),

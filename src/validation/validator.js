@@ -77,4 +77,4 @@ const validCustomer = [
 
 const validOrder = [];
 
-module.exports = { validCustomer, validCook, validOrder };
+module.exports = { validCustomer, validOrder };
