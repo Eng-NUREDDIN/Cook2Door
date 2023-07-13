@@ -35,7 +35,7 @@ router.get('/', dishController.getAllDishes)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Dish'
+ *             $ref: '#/components/schemas/Dish_Add'
  *     responses:
  *       201:
  *         description: Dish successfully added
