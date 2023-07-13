@@ -34,7 +34,7 @@ router.get('/', cookController.getAllCooks);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Cook'
+ *             $ref: '#/components/schemas/Cook_Add'
  *     responses:
  *       201:
  *         description: Cook successfully added
@@ -50,12 +50,12 @@ router.post('/add', cookController.addCook);
  *   get:
  *     summary: Get a cook by ID
  *     tags: [Cooks]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Cook_Get_By_ID'
  *     responses:
  *       200:
  *         description: Success
@@ -82,7 +82,7 @@ router.get('/:id', cookController.getCookById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Cook'
+ *             $ref: '#/components/schemas/Cook_Update'
  *     responses:
  *       200:
  *         description: Success
@@ -100,12 +100,12 @@ router.put('/:id', cookController.updateCook);
  *   delete:
  *     summary: Delete a cook by ID
  *     tags: [Cooks]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Cook_Delete'
  *     responses:
  *       200:
  *         description: Success
