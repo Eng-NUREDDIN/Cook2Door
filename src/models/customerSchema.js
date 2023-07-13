@@ -29,6 +29,10 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('customerSchema', customerSchema);
