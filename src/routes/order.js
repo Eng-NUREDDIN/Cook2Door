@@ -5,10 +5,10 @@ const orderController = require('../controllers/orderController')
 const {validOrder} = require('../validation/validator')
 
 router.get('/', orderController.getAllOrders)
-router.post('/', validOrder, orderController.addOrder)
+router.post('/add', validOrder, orderController.addOrder)
 router.get('/:id', orderController.getOrderById)
 router.put('/:id', orderController.updateOrder)
-router.delete('/:id', orderController.updateOrder)
+router.delete('/:id', orderController.removeOrder)
 
 
 module.exports = router;
