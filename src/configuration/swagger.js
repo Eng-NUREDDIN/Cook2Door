@@ -68,7 +68,7 @@ const options = {
           },
           required: ['cook_name', 'cook_info', 'cook_phone', 'cook_address'],
         },
-        Dish_Update: {
+        Cook_Update: {
           type: 'object',
           properties: {
             cook_name: {
@@ -88,7 +88,7 @@ const options = {
             },},
           required: ['cook_name', 'cook_info', 'cook_phone', 'cook_address', 'cook_id'],
              },
-             cook_Delete: {
+             Cook_Delete: {
                 type: 'object',
                 properties: {
                   cook_id: {
