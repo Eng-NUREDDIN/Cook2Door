@@ -1,4 +1,3 @@
-
 const customerSchema = require('../models/customerSchema');
 
 /**
@@ -51,8 +50,8 @@ async function addCustomer(req, res) {
 
 /**
  * Get Customer by its id
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function getCustomerById(req, res) {
   try {
@@ -89,8 +88,8 @@ async function removeCustomer(req, res) {
 
 /**
  * Update the Customer based on its id
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function updateCustomer(req, res) {
   try {

@@ -1,5 +1,5 @@
 /**
- * uncomment this after schema designed compeletly 
+ * uncomment this after schema designed compeletly
  * and pulled intpo the repository and delete this comment
  */
 const orderSchema = require('../models/orderSchema')
@@ -8,9 +8,9 @@ const axios = require('axios')
 
 
 /**
- * This return all Orders 
- * @param {*} req 
- * @param {*} res 
+ * This return all Orders
+ * @param {*} req
+ * @param {*} res
  */
 async function getAllOrders (req, res) {
 
@@ -23,13 +23,12 @@ async function getAllOrders (req, res) {
            // If an error occurs, sends a 400 (Bad Request) status with the error message
         res.status(400).json({ message: err.message });
       }
-    
 }
 
 /**
  * Add new Order into the Order schema
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function addOrder (req, res) {
 
@@ -67,14 +66,14 @@ async function addOrder (req, res) {
      // If an error occurs, sends a 400 (Bad Request) status with the error message
     res.status(400).json({ message: err.message });
   }
-
 }
 
 /**
  * Get Order by its id
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
+
 async function getOrderById (req, res) {
 
     //implemant the code here
@@ -93,13 +92,12 @@ async function getOrderById (req, res) {
        // If an error occurs, sends a 400 (Bad Request) status with the error message
       res.status(400).json({ message: err.message });
     }
-
 }
 
 /**
  * remove the Order based on the id
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function removeOrder (req, res) {
 
@@ -124,8 +122,8 @@ async function removeOrder (req, res) {
 
 /**
  * Update the Order based on its id
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function updateOrder (req, res) {
 
@@ -150,9 +148,12 @@ async function updateOrder (req, res) {
       // If an error occurs, sends a 400 (Bad Request) status with the error message
       res.status(400).json({ message: err.message });
     }
-    
 }
 
-module.exports = { getAllOrders: getAllOrders, addOrder: addOrder, getOrderById: getOrderById, removeOrder: removeOrder,
-    updateOrder: updateOrder
-}
+module.exports = {
+  getAllOrders,
+  addOrder,
+  getOrderById,
+  removeOrder,
+  updateOrder,
+};
