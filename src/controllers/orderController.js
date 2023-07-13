@@ -47,8 +47,9 @@ async function addOrder (req, res) {
   }
 
     // Check if the dish exists
-    const resDish = await axios.get(`http://localhost:3000/api/customer/${dish_id}`);
+    const resDish = await axios.get(`http://localhost:3000/api/dish/${dish_id}`);
     const dish = resDish.data;
+     // If Dish is not found, handle the error
     if (!dish) {
       return res.status(404).json({ message: 'Dish not found' });
     }
