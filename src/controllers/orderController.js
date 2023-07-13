@@ -3,8 +3,7 @@
  * and pulled intpo the repository and delete this comment
  */
 const orderSchema = require('../models/orderSchema')
-const customerSchema = require('../models/customerSchema');
-const dishSchema = require('../models/dishSchema');
+
 
 
 /**
@@ -38,13 +37,18 @@ async function addOrder (req, res) {
 
   try {
     // Check if the customer exists
-    const customer = await customerSchema.findById(customer_id);
-    if (!customer) {
-      return res.status(404).json({ message: 'Customer not found' });
-    }
+  
+  const resCustomer = await axios.get(`http://localhost:3000/api/customer/${customer_id}`);
+  const customer = resCustomer.data;
+
+  // If custome is not found, handle the error
+  if (!custome) {
+      return res.status(404).json({ error: 'customer not found' });
+  }
 
     // Check if the dish exists
-    const dish = await dishSchema.findById(dish_id);
+    const resDish = await axios.get(`http://localhost:3000/api/customer/${dish_id}`);
+    const dish = resDish.data;
     if (!dish) {
       return res.status(404).json({ message: 'Dish not found' });
     }
