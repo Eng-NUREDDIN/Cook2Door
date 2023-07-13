@@ -21,7 +21,7 @@ const options = {
                 type: 'string',
               },
               cook_id: {
-                type: 'integer',
+                type: 'string',
               },
             },
             required: ['dish_name', 'dish_ingredient', 'cook_id'],

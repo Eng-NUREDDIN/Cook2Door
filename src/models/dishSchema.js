@@ -13,6 +13,8 @@ const dishSchema = new mongoose.Schema ({
         type: mongoose.Schema.Types.ObjectId,
         required: false,
         // changed it based on the name which is decided for cook Schema6
-        ref: 'cookSchema'
+        ref: 'CookSchema'
     },
 })
+
+module.exports = mongoose.model('dishSchema', dishSchema);
