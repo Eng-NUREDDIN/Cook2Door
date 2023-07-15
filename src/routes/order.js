@@ -118,7 +118,7 @@ router.post('/', validOrder, orderController.addOrder);
  *         description: Order successfully deleted
  *       404:
  *         description: Order not found
- *       500:
+ *       400:
  *         description: Internal server error
  */
 

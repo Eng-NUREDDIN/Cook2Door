@@ -64,7 +64,7 @@ async function addOrder (req, res) {
     res.status(201).json(savedOrder);
   } catch (err) {
      // If an error occurs, sends a 400 (Bad Request) status with the error message
-    res.status(400).json({ message: err.message });
+     res.status(400).json({ message: err.message });
   }
 }
 
