@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const dishController = require('../controllers/dishController')
-const {validDish} = require('../validation/validator')
+const dishController = require('../controllers/dishController');
+const { validDish } = require('../validation/validator');
 /**
  * @swagger
  * tags:
@@ -22,7 +22,7 @@ const {validDish} = require('../validation/validator')
  *       500:
  *         description: Internal server error
  */
-router.get('/', dishController.getAllDishes)
+router.get('/', dishController.getAllDishes);
 
 /**
  * @swagger
@@ -44,7 +44,7 @@ router.get('/', dishController.getAllDishes)
  *       500:
  *         description: Internal server error
  */
-router.post('/add', dishController.addDish)
+router.post('/add', dishController.addDish);
 
 /**
  * @swagger
@@ -66,7 +66,7 @@ router.post('/add', dishController.addDish)
  *       500:
  *         description: Internal server error
  */
-router.get('/:id', dishController.getDishById)
+router.get('/:id', dishController.getDishById);
 
 /**
  * @swagger
@@ -96,7 +96,7 @@ router.get('/:id', dishController.getDishById)
  *       500:
  *         description: Internal server error
  */
-router.put('/:id', dishController.updateDish)
+router.put('/:id', dishController.updateDish);
 
 /**
  * @swagger
@@ -118,7 +118,6 @@ router.put('/:id', dishController.updateDish)
  *       500:
  *         description: Internal server error
  */
-router.delete('/:id', dishController.removeDish)
-
+router.delete('/:id', dishController.removeDish);
 
 module.exports = router;
