@@ -64,7 +64,7 @@ router.post('/', validOrder, orderController.addOrder);
  *         description: Successful operation
  *       404:
  *         description: Order not found
- *       400:
+ *       500:
  *         description: Internal server error
  */
 
