@@ -6,6 +6,7 @@ const cookRoutes = require('./routes/cook');
 const customerRoutes = require('./routes/customer');
 const orderRoutes = require('./routes/order');
 const dishRoutes = require('./routes/dish');
+const userRoutes = require('./routes/user');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./configuration/swagger');
 
@@ -21,6 +22,7 @@ app.use('/api/cook', cookRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/dish/', dishRoutes);
+app.use('/api/user/', userRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
