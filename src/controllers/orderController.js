@@ -64,7 +64,7 @@ async function addOrder (req, res) {
     res.status(201).json(savedOrder);
   } catch (err) {
      // If an error occurs, sends a 400 (Bad Request) status with the error message
-     res.status(400).json({ message: err.message });
+     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -115,7 +115,8 @@ async function removeOrder (req, res) {
       res.status(201).json({ message: 'Order removed successfully' });
     } catch (err) {
       // If an error occurs, sends a 400 (Bad Request) status with the error message
-      res.status(400).json({ message: err.message });
+      //res.status(400).json({ message: err.message });
+      res.status(500).json({ error: 'Internal server error' });
     }
 
 }
@@ -146,7 +147,8 @@ async function updateOrder (req, res) {
       res.status(201).json(order);
     } catch (err) {
       // If an error occurs, sends a 400 (Bad Request) status with the error message
-      res.status(400).json({ message: err.message });
+      //res.status(400).json({ message: err.message });
+      res.status(500).json({ error: 'Internal server error' });
     }
 }
 
