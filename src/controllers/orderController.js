@@ -35,17 +35,23 @@ async function addOrder (req, res) {
     //implemant the code here
     const { dish_id, customer_id, order_description } = req.body;
 
-  try {
-    // Check if the customer exists
   
-  const resCustomer = await axios.get(`http://localhost:3000/api/customer/${customer_id}`);
-  const customer = resCustomer.data;
-
-  // If custome is not found, handle the error
-  if (!custome) {
+    // Check if the customer exists
+  try{
+    const resCustomer = await axios.get(`http://localhost:3000/api/customer/${customer_id}`);
+    const customer = resCustomer.data;
+  
+    // If custome is not found, handle the error
+    if (!customer) {
+        return res.status(404).json({ error: 'customer not found' });
+    }
+  }
+  catch(err){
+    if (err.response.status == 404)
       return res.status(404).json({ error: 'customer not found' });
   }
 
+  try {
     // Check if the dish exists
     const resDish = await axios.get(`http://localhost:3000/api/dish/${dish_id}`);
     const dish = resDish.data;
@@ -63,6 +69,7 @@ async function addOrder (req, res) {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
   } catch (err) {
+    // console.log(err)
      // If an error occurs, sends a 400 (Bad Request) status with the error message
      res.status(500).json({ error: 'Internal server error' });
   }

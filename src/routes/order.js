@@ -106,7 +106,7 @@ router.post('/', validOrder, orderController.addOrder);
  * /api/order/{id}:
  *   delete:
  *     tags: [Order]
- *     summary: Delete a dish by ID
+ *     summary: Delete a order by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -122,7 +122,7 @@ router.post('/', validOrder, orderController.addOrder);
  *         description: Internal server error
  */
 
- router.delete('/:id', orderController.updateOrder);
+ router.delete('/:id', orderController.removeOrder);
 
  module.exports = router;
 

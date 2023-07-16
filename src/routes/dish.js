@@ -112,9 +112,9 @@ router.put('/:id', dishController.updateDish)
  *           type: string
  *     responses:
  *       200:
- *         description: Dishe successfully deleted
+ *         description: Order successfully deleted
  *       404:
- *         description: Dishe not found
+ *         description: Order not found
  *       500:
  *         description: Internal server error
  */
