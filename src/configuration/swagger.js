@@ -38,6 +38,66 @@ const options = {
           },
           required: ['dish_name', 'dish_ingredient'],
         },
+        Cook_Get_By_ID: {
+          type: 'object',
+          properties: {
+            cook_id: {
+              type: 'string',
+            },
+          },
+          required: ['cook_id'],
+        },
+        Cook_Add: {
+          type: 'object',
+          properties: {
+            cook_name: {
+              type: 'string',
+            },
+            cook_info: {
+              type: 'string',
+            },
+            cook_address: {
+              type: 'string',
+            },
+            cook_phone: {
+              type: 'string',
+            },
+            cook_id: {
+              type: 'string',
+            },
+          },
+          required: ['cook_name', 'cook_info', 'cook_phone', 'cook_address'],
+        },
+        Cook_Update: {
+          type: 'object',
+          properties: {
+            cook_name: {
+              type: 'string',
+            },
+            cook_info: {
+              type: 'string',
+            },
+            cook_address: {
+              type: 'string',
+            },
+            cook_phone: {
+              type: 'string',
+            },
+            cook_id: {
+              type: 'string',
+            },
+          },
+          required: ['cook_name', 'cook_info', 'cook_phone', 'cook_address', 'cook_id'],
+        },
+        Cook_Delete: {
+          type: 'object',
+          properties: {
+            cook_id: {
+              type: 'string',
+            },
+          },
+          required: ['cook_id'],
+        },
         Customer: {
           type: 'object',
           properties: {
