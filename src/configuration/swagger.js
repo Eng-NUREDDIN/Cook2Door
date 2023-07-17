@@ -37,7 +37,38 @@ const options = {
               }
             },
             required: ['dish_name', 'dish_ingredient'],
+
           },
+          Order_Add: {
+            type: 'object',
+            properties: {
+              dish_id: {
+                type: 'string',
+              },
+              order_description: {
+                type: 'string',
+              },
+              customer_id: {
+                type: 'string',
+              },
+            },
+            required: ['dish_id', 'customer_id', 'order_description'],
+          },
+          Order_Update :{
+            
+            type: 'object',
+            properties: {
+              
+              order_description: {
+                type: 'string',
+              },
+              
+            },
+            required: [ 'order_description'],
+
+          }
+
+
         },
       },
     },
