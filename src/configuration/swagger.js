@@ -107,22 +107,12 @@ const options = {
             customer_name: {
               type: 'string',
             },
-            created_at: {
-              type: 'string',
-              format: 'date-time',
-            },
             customer_address: {
               type: 'string',
             },
             birthdate: {
               type: 'string',
               format: 'date',
-            },
-            provider: {
-              type: 'string',
-            },
-            provider_id: {
-              type: 'string',
             },
             password: {
               type: 'string',
