@@ -10,7 +10,7 @@ async function getAllCooks(req, res) {
     const cooks = await cookSchema.find();
     res.status(200).json(cooks);
   } catch (error) {
-    res.status(500).json({ error: error  });
+    res.status(500).json({ error: error });
   }
 }
 
@@ -44,7 +44,7 @@ async function getCookById(req, res) {
       res.status(200).json(cook);
     }
   } catch (error) {
-    res.status(500).json({ error: error  });
+    res.status(500).json({ error: error });
   }
 }
 
@@ -58,12 +58,12 @@ async function removeCook(req, res) {
     const cookId = req.params.id;
     const removedCook = await cookSchema.findByIdAndRemove(cookId);
     if (!removedCook) {
-      res.status(404).json({ error: error  });
+      res.status(404).json({ error: error });
     } else {
       res.status(200).json(removedCook);
     }
   } catch (error) {
-    res.status(500).json({error: error  });
+    res.status(500).json({ error: error });
   }
 }
 
