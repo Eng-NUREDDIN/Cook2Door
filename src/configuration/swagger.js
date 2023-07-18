@@ -133,11 +133,68 @@ const options = {
           },
           required: ['cook_id'],
         },
+        userSchema: { 
+          type: 'object',
+          properties: {
+            email: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+            },
+            role: {
+              type: 'string',
+              enum: ['COOK', 'CUSTOMER'],
+            },
+          },
+          required: ['email', 'password', 'role'],
+        },
+        User_Login: {
+          type: 'object',
+          properties: {
+            email: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+            },
+            required: ['email', 'password'],
+          },},
+        User_Signup: {
+          type: 'object',
+          properties: {
+            email: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+            },
+            role: {
+              type: 'string',
+              enum: ['COOK', 'CUSTOMER'],
+            },
+            required: ['email', 'password', 'role'],
+          },},
+          User_update: {
+            type: 'object',
+            properties: {
+              email: {
+                type: 'string',
+              },
+              password: {
+                type: 'string',
+              },
+              role: {
+                type: 'string',
+                enum: ['COOK', 'CUSTOMER'],
+              },
+              required: ['email', 'password', 'role'],
+            },},
       },
-    },
-  },
+    },},
+  
   apis: [path.resolve(__dirname, '../routes/*.js')], // Path to your route files
-};
+      };
 
 const specs = swaggerJsdoc(options);
 
