@@ -26,18 +26,47 @@ const options = {
           },
           required: ['dish_name', 'dish_ingredient', 'cook_id'],
         },
-        Dish_Update: {
-          type: 'object',
-          properties: {
-            dish_name: {
-              type: 'string',
+          Dish_Update: {
+            type: 'object',
+            properties: {
+              dish_name: {
+                type: 'string',
+              },
+              dish_ingredient: {
+                type: 'string',
+              }
             },
-            dish_ingredient: {
-              type: 'string',
-            },
+            required: ['dish_name', 'dish_ingredient'],
+
           },
-          required: ['dish_name', 'dish_ingredient'],
-        },
+          Order_Add: {
+            type: 'object',
+            properties: {
+              dish_id: {
+                type: 'string',
+              },
+              order_description: {
+                type: 'string',
+              },
+              customer_id: {
+                type: 'string',
+              },
+            },
+            required: ['dish_id', 'customer_id', 'order_description'],
+          },
+          Order_Update :{
+            
+            type: 'object',
+            properties: {
+              
+              order_description: {
+                type: 'string',
+              },
+              
+            },
+            required: [ 'order_description'],
+
+          },
         Cook_Get_By_ID: {
           type: 'object',
           properties: {
