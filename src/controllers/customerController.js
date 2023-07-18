@@ -2,8 +2,8 @@ const customerSchema = require('../models/customerSchema');
 
 /**
  * Get all Customers
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function getAllCustomers(req, res) {
   try {
@@ -16,18 +16,26 @@ async function getAllCustomers(req, res) {
 
 /**
  * Add a new Customer to the Customer schema
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function addCustomer(req, res) {
   try {
     // Extract customer data from the request body
-    const { customer_email, customer_name, customer_address, birthdate, password } = req.body;
+    const {
+      customer_email,
+      customer_name,
+      customer_address,
+      birthdate,
+      password,
+    } = req.body;
 
     // Check if customer with the same email already exists
     const existingCustomer = await customerSchema.findOne({ customer_email });
     if (existingCustomer) {
-      res.status(409).json({ message: "Customer with this email already exists" });
+      res
+        .status(409)
+        .json({ message: 'Customer with this email already exists' });
       return;
     }
 
@@ -37,7 +45,7 @@ async function addCustomer(req, res) {
       customer_name,
       customer_address,
       birthdate,
-      password
+      password,
     });
 
     // Save the customer to the database
@@ -58,7 +66,7 @@ async function getCustomerById(req, res) {
     const { id } = req.params;
     const customer = await customerSchema.findById(id);
     if (!customer) {
-      res.status(404).json({ message: "Customer not found" });
+      res.status(404).json({ message: 'Customer not found' });
       return;
     }
     res.status(200).json(customer);
@@ -69,18 +77,18 @@ async function getCustomerById(req, res) {
 
 /**
  * Remove the Customer based on the id
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function removeCustomer(req, res) {
   try {
     const { id } = req.params;
     const removedCustomer = await customerSchema.findByIdAndRemove(id);
     if (!removedCustomer) {
-      res.status(404).json({ message: "Customer not found" });
+      res.status(404).json({ message: 'Customer not found' });
       return;
     }
-    res.status(200).json({ message: "Customer removed successfully" });
+    res.status(200).json({ message: 'Customer removed successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -94,7 +102,13 @@ async function removeCustomer(req, res) {
 async function updateCustomer(req, res) {
   try {
     const { id } = req.params;
-    const { customer_email, customer_name, customer_address, birthdate, password } = req.body;
+    const {
+      customer_email,
+      customer_name,
+      customer_address,
+      birthdate,
+      password,
+    } = req.body;
 
     // Create an object with the updated fields
     const updatedFields = {};
@@ -105,11 +119,15 @@ async function updateCustomer(req, res) {
     if (password) updatedFields.password = password;
 
     // Find and update the customer by id with the updated fields
-    const updatedCustomer = await customerSchema.findByIdAndUpdate(id, updatedFields, { new: true });
+    const updatedCustomer = await customerSchema.findByIdAndUpdate(
+      id,
+      updatedFields,
+      { new: true }
+    );
 
     // Check if customer exists
     if (!updatedCustomer) {
-      res.status(404).json({ message: "Customer not found" });
+      res.status(404).json({ message: 'Customer not found' });
       return;
     }
 
@@ -124,5 +142,5 @@ module.exports = {
   addCustomer, // Adds a new customer to the database
   getCustomerById, // Retrieves a customer by their ID
   removeCustomer, // Removes a customer from the database by their ID
-  updateCustomer // Updates a customer in the database by their ID
+  updateCustomer, // Updates a customer in the database by their ID
 };
