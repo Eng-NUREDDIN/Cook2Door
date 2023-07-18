@@ -85,20 +85,28 @@ const options = {
             },
             cook_id: {
               type: 'string',
-            },},
-          required: ['cook_name', 'cook_info', 'cook_phone', 'cook_address', 'cook_id'],
-             },
-             Cook_Delete: {
-                type: 'object',
-                properties: {
-                  cook_id: {
-                    type: 'string',
-                  },
-                },
-                required: ['cook_id'],
-              },
+            },
+          },
+          required: [
+            'cook_name',
+            'cook_info',
+            'cook_phone',
+            'cook_address',
+            'cook_id',
+          ],
+        },
+        Cook_Delete: {
+          type: 'object',
+          properties: {
+            cook_id: {
+              type: 'string',
+            },
+          },
+          required: ['cook_id'],
+        },
+      },
     },
-  },},
+  },
   apis: [path.resolve(__dirname, '../routes/*.js')], // Path to your route files
 };
 
