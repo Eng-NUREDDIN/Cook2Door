@@ -1,6 +1,6 @@
 const userSchema = require('../models/userSchema');
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt');
 /**
  * Return all users
  * @param {*} res
@@ -40,7 +40,9 @@ async function signUp(req, res) {
       res.status(400).json({ error: 'Role is required' });
       return;
     }
-    const newUser = new userSchema({ email, password, role });
+    //const hashedEmail = await bcrypt.hash(email, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new userSchema({ email, hashedPassword, role });
     await newUser.save();
     res.json({ message: 'User created successfully' });
   } catch (error) {
@@ -68,9 +70,16 @@ if (email.trim() === '' || password.trim() === '') {
   return;
 }
      
-    const user = await userSchema.findOne({ email, password });
+    const user = await userSchema.findOne({ email});
 
     if (!user) {
+      res.status(401).json({ error: 'Invalid credentials' });
+      return;
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordMatch) {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
