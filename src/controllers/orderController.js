@@ -31,19 +31,24 @@ async function addOrder(req, res) {
   //implemant the code here
   const { dish_id, customer_id, order_description } = req.body;
 
-  try {
+  
     // Check if the customer exists
 
-    const resCustomer = await axios.get(
-      `http://localhost:3000/api/customer/${customer_id}`
-    );
+  try{
+    const resCustomer = await axios.get(`http://localhost:3000/api/customer/${customer_id}`);
     const customer = resCustomer.data;
-
+  
     // If custome is not found, handle the error
-    if (!custome) {
+    if (!customer) {
+        return res.status(404).json({ error: 'customer not found' });
+    }
+  }
+  catch(err){
+    if (err.response.status == 404)
       return res.status(404).json({ error: 'customer not found' });
     }
 
+  try {
     // Check if the dish exists
     const resDish = await axios.get(
       `http://localhost:3000/api/dish/${dish_id}`
@@ -63,8 +68,9 @@ async function addOrder(req, res) {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
   } catch (err) {
-    // If an error occurs, sends a 400 (Bad Request) status with the error message
-    res.status(400).json({ message: err.message });
+    // console.log(err)
+     // If an error occurs, sends a 400 (Bad Request) status with the error message
+     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -98,16 +104,25 @@ async function getOrderById(req, res) {
  * @param {*} req
  * @param {*} res
  */
-async function removeOrder(req, res) {
-  //implemant the code here
-  const { id } = req.params;
 
-  try {
-    // Finds and removes an order from the orderSchema by its ID using the findByIdAndDelete() method
-    const order = await orderSchema.findByIdAndDelete(id);
-    if (!order) {
-      // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
-      return res.status(404).json({ message: 'Order not found' });
+async function removeOrder (req, res) {
+
+    //implemant the code here
+    const { id } = req.params;
+
+    try {
+        // Finds and removes an order from the orderSchema by its ID using the findByIdAndDelete() method
+      const order = await orderSchema.findByIdAndDelete(id);
+      if (!order) {
+         // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
+        return res.status(404).json({ message: 'Order not found' });
+      }
+  
+      res.status(201).json({ message: 'Order removed successfully' });
+    } catch (err) {
+      // If an error occurs, sends a 400 (Bad Request) status with the error message
+      //res.status(400).json({ message: err.message });
+      res.status(500).json({ error: 'Internal server error' });
     }
 
     res.status(201).json({ message: 'Order removed successfully' });
@@ -122,21 +137,30 @@ async function removeOrder(req, res) {
  * @param {*} req
  * @param {*} res
  */
-async function updateOrder(req, res) {
-  //implemant the code here
-  const { id } = req.params;
-  const { order_description } = req.body;
 
-  try {
-    // Finds an order by its ID and updates it with the provided order description using the findByIdAndUpdate() method
-    const order = await orderSchema.findByIdAndUpdate(
-      id,
-      { order_description },
-      { new: true }
-    );
-    if (!order) {
-      // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
-      return res.status(404).json({ message: 'Order not found' });
+async function updateOrder (req, res) {
+
+    //implemant the code here
+    const { id } = req.params;
+    const { order_description } = req.body;
+  
+    try {
+       // Finds an order by its ID and updates it with the provided order description using the findByIdAndUpdate() method
+      const order = await orderSchema.findByIdAndUpdate(
+        id,
+        {  order_description },
+        { new: true }
+      );
+      if (!order) {
+            // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
+        return res.status(404).json({ message: 'Order not found' });
+      }
+  
+      res.status(201).json(order);
+    } catch (err) {
+      // If an error occurs, sends a 400 (Bad Request) status with the error message
+      //res.status(400).json({ message: err.message });
+      res.status(500).json({ error: 'Internal server error' });
     }
 
     res.status(201).json(order);
