@@ -47,8 +47,9 @@ async function addOrder(req, res) {
     return;
   }
 
-  try {
+  
     // Check if the customer exists
+
 
     const resCustomer = await axios.get(
       `http://localhost:3000/api/customer/${customer_id}`
@@ -56,12 +57,18 @@ async function addOrder(req, res) {
     
     // Customer Data in respond of API
     const customer = resCustomer.data;
-
+  
     // If custome is not found, handle the error
     if (!customer) {
+        return res.status(404).json({ error: 'customer not found' });
+    }
+  }
+  catch(err){
+    if (err.response.status == 404)
       return res.status(404).json({ error: 'customer not found' });
     }
 
+  try {
     // Check if the dish exists
     const resDish = await axios.get(
       `http://localhost:3000/api/dish/${dish_id}`
@@ -100,8 +107,9 @@ async function addOrder(req, res) {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
   } catch (err) {
-    // If an error occurs, sends a 400 (Bad Request) status with the error message
-    res.status(400).json({ message: err.message });
+    // console.log(err)
+     // If an error occurs, sends a 400 (Bad Request) status with the error message
+     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -201,6 +209,7 @@ async function getAllOrdersByCookId( req, res ){
  * @param {*} req
  * @param {*} res
  */
+
 async function removeOrder(req, res) {
   //implemant the code here
   const { orderId } = req.params;
@@ -217,6 +226,7 @@ async function removeOrder(req, res) {
     if (!order) {
       // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
       return res.status(404).json({ message: 'Order not found' });
+
     }
 
     res.status(201).json({ message: 'Order removed successfully' });
@@ -231,6 +241,7 @@ async function removeOrder(req, res) {
  * @param {*} req
  * @param {*} res
  */
+
 async function updateOrderByOrderId(req, res) {
   //implemant the code here
   const { orderId } = req.params;
@@ -328,6 +339,7 @@ async function updateOrderState(req, res) {
     if (!order) {
       // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
       return res.status(404).json({ message: 'Order not found' });
+
     }
 
     res.status(201).json(order);
