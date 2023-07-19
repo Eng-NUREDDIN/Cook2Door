@@ -6,9 +6,14 @@ const orderController = require('../controllers/orderController');
 const { validOrder } = require('../validation/validator');
 
 router.get('/', orderController.getAllOrders);
-router.post('/', validOrder, orderController.addOrder);
-router.get('/:id', orderController.getOrderById);
-router.put('/:id', orderController.updateOrder);
-router.delete('/:id', orderController.updateOrder);
+router.get('/:orderId', orderController.getOrderByOrderId);
+router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId)
+router.get('/cookId/:cookId', orderController.getAllOrdersByCookId)
+router.post('/', orderController.addOrder);
+router.put('/:orderId', orderController.updateOrderByOrderId);
+router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId)
+router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState)
+router.delete('/:orderId', orderController.removeOrder);
+
 
 module.exports = router;

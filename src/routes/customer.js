@@ -6,7 +6,7 @@ const customerController = require('../controllers/customerController');
 const { validCustomer } = require('../validation/validator');
 
 router.get('/', customerController.getAllCustomers);
-router.post('/', validCustomer, customerController.addCustomer);
+router.post('/',  customerController.addCustomer);
 router.get('/:id', customerController.getCustomerById);
 router.put('/:id', customerController.updateCustomer);
 router.delete('/id', customerController.removeCustomer);

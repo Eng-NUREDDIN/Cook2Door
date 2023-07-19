@@ -63,7 +63,7 @@ async function getDishById(req, res) {
   // Extract dish id from the request parameters
   const { id } = req.params;
 
-  // For in valid Id
+  // For invalid Id
   if (!ObjectId.isValid(id)) {
     res.status(400).json({ message: 'Invalid dish ID' });
     return;
