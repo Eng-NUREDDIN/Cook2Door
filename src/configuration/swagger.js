@@ -26,19 +26,41 @@ const options = {
           },
           required: ['dish_name', 'dish_ingredient', 'cook_id'],
         },
-          Dish_Update: {
-            type: 'object',
-            properties: {
-              dish_name: {
-                type: 'string',
-              },
-              dish_ingredient: {
-                type: 'string',
-              }
-            },
-            required: ['dish_name', 'dish_ingredient'],
 
+        Dish_Update: {
+          type: 'object',
+          properties: {
+            dish_name: {
+              type: 'string',
+            },
+            dish_ingredient: {
+              type: 'string',
+            },
           },
+          required: ['dish_name', 'dish_ingredient'],
+        },
+        Customer: {
+          type: 'object',
+          properties: {
+            customer_email: {
+              type: 'string',
+            },
+            customer_name: {
+              type: 'string',
+            },
+            customer_address: {
+              type: 'string',
+            },
+            birthdate: {
+              type: 'string',
+              format: 'date',
+            },
+            password: {
+              type: 'string',
+            },
+          },
+          required: ['customer_email', 'customer_name', 'customer_address', 'birthdate', 'password'],
+        },   
           Order_Add: {
             type: 'object',
             properties: {
@@ -139,9 +161,6 @@ const options = {
             email: {
               type: 'string',
             },
-            password: {
-              type: 'string',
-            },
             role: {
               type: 'string',
               enum: ['COOK', 'CUSTOMER'],
@@ -159,7 +178,8 @@ const options = {
               type: 'string',
             },
             required: ['email', 'password'],
-          },},
+          },
+        },
         User_Signup: {
           type: 'object',
           properties: {
@@ -174,7 +194,8 @@ const options = {
               enum: ['COOK', 'CUSTOMER'],
             },
             required: ['email', 'password', 'role'],
-          },},
+          },
+        },
           User_update: {
             type: 'object',
             properties: {
@@ -189,12 +210,14 @@ const options = {
                 enum: ['COOK', 'CUSTOMER'],
               },
               required: ['email', 'password', 'role'],
-            },},
+            },
+          },
       },
-    },},
-  
-  apis: [path.resolve(__dirname, '../routes/*.js')], // Path to your route files
-      };
+    },
+  },
+  apis: [path.resolve(__dirname, '../routes/*.js')], // Path to route files
+};
+
 
 const specs = swaggerJsdoc(options);
 
