@@ -144,3 +144,33 @@ module.exports = {
   removeCustomer, // Removes a customer from the database by their ID
   updateCustomer, // Updates a customer in the database by their ID
 };
+
+
+const crypto = require('crypto');
+
+// Encrypt a name
+function encryptName(name, secretKey) {
+    const cipher = crypto.createCipher('aes-256-cbc', secretKey);
+    let encrypted = cipher.update(name, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+}
+
+// Decrypt an encrypted name
+function decryptName(encryptedName, secretKey) {
+    const decipher = crypto.createDecipher('aes-256-cbc', secretKey);
+    let decrypted = decipher.update(encryptedName, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
+
+const name = 'John Doe';
+const secretKey = 'supersecretkey';
+
+const encryptedName = encryptName(name, secretKey);
+console.log('Encrypted Name:', encryptedName);
+
+const decryptedName = decryptName(encryptedName, secretKey);
+console.log('Decrypted Name:', decryptedName);
+
+module.exports = { encryptName, decryptName };
