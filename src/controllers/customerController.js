@@ -1,4 +1,7 @@
 const customerSchema = require('../models/customerSchema');
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
+const axios = require('axios');
 
 /**
  * Get all Customers
@@ -39,12 +42,15 @@ async function addCustomer(req, res) {
       return;
     }
 
+    // Convert to the Date
+    const birthdateDate = new Date(birthdate);
+
     // Create a new customer instance
     const customer = new customerSchema({
       customer_email,
       customer_name,
       customer_address,
-      birthdate,
+      birthdate: birthdateDate,
       password,
     });
 
@@ -55,6 +61,7 @@ async function addCustomer(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
 
 /**
  * Get Customer by its id
