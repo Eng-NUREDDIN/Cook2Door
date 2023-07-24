@@ -1,10 +1,9 @@
-  const express = require('express');
+const express = require('express');
 
- const router = express.Router();
+const router = express.Router();
 
 const orderController = require('../controllers/orderController');
 //const { validOrder } = require('../validation/validator');
-
 
 /**
  * @swagger
@@ -12,7 +11,6 @@ const orderController = require('../controllers/orderController');
  *   name: Order
  *   description: API endpoints for Order
  */
-
 
 /**
  * @swagger
@@ -50,7 +48,6 @@ router.get('/', orderController.getAllOrders);
  */
 router.post('/', orderController.addOrder);
 
-
 /**
  * @swagger
  * /api/order/{orderId}:
@@ -66,7 +63,7 @@ router.post('/', orderController.addOrder);
  *     responses:
  *       200:
  *         description: Successful operation
- *       400: 
+ *       400:
  *         description: Invalid request
  *       404:
  *         description: Order not found
@@ -149,7 +146,7 @@ router.delete('/:orderId', orderController.removeOrder);
  *       500:
  *         description: Internal server error
  */
-router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId)
+router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId);
 
 /**
  * @swagger
@@ -173,7 +170,7 @@ router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId)
  *       500:
  *         description: Internal server error
  */
-router.get('/cookId/:cookId', orderController.getAllOrdersByCookId)
+router.get('/cookId/:cookId', orderController.getAllOrdersByCookId);
 
 /**
  * @swagger
@@ -202,7 +199,7 @@ router.get('/cookId/:cookId', orderController.getAllOrdersByCookId)
  *       500:
  *         description: Internal server error
  */
-router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId)
+router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId);
 
 /**
  * @swagger
@@ -231,8 +228,6 @@ router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId)
  *       500:
  *         description: Internal server error
  */
-router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState)
+router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState);
 
- module.exports = router;
-
-
+module.exports = router;

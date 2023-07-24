@@ -25,8 +25,7 @@ const { validCustomer } = require('../validation/validator');
  */
 router.get('/', customerController.getAllCustomers);
 
-router.post('/',  customerController.addCustomer);
-
+router.post('/', customerController.addCustomer);
 
 /**
  * @swagger
