@@ -47,27 +47,6 @@ async function addOrder(req, res) {
     return;
   }
 
-  
-    // Check if the customer exists
-
-
-    const resCustomer = await axios.get(
-      `http://localhost:3000/api/customer/${customer_id}`
-    );
-    
-    // Customer Data in respond of API
-    const customer = resCustomer.data;
-  
-    // If custome is not found, handle the error
-    if (!customer) {
-        return res.status(404).json({ error: 'customer not found' });
-    }
-  }
-  catch(err){
-    if (err.response.status == 404)
-      return res.status(404).json({ error: 'customer not found' });
-    }
-
   try {
     // Check if the dish exists
     const resDish = await axios.get(
@@ -95,6 +74,19 @@ async function addOrder(req, res) {
       return res.status(404).json({ message: 'Cook not found' });
     }
 
+    // Check if the customer exists
+    const resCustomer = await axios.get(
+      `http://localhost:3000/api/customer/${customer_id}`
+    );
+    
+    // Customer Data in respond of API
+    const customer = resCustomer.data;
+  
+    // If custome is not found, handle the error
+    if (!customer) {
+        return res.status(404).json({ error: 'customer not found' });
+    }
+
     // Creates a new order instance using the orderSchema and the provided request body
     const newOrder = new orderSchema({
       cook_id,
@@ -107,9 +99,8 @@ async function addOrder(req, res) {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
   } catch (err) {
-    // console.log(err)
      // If an error occurs, sends a 400 (Bad Request) status with the error message
-     res.status(500).json({ error: 'Internal server error' });
+     res.status(500).json({ error: err });
   }
 }
 
@@ -170,7 +161,7 @@ async function getAllOrdersByCustomerId( req, res ){
     res.status(201).json(order);
 
   } catch( err ){
-    res.status(400).json({message: err.message})
+    res.status(500).json({message: err})
   }
 }
 
@@ -200,7 +191,7 @@ async function getAllOrdersByCookId( req, res ){
     res.status(201).json(order);
 
   }catch (err) {
-    res.status(400).json({message: err.message})
+    res.status(500).json({message: err.message})
   }
 }
 
@@ -243,11 +234,13 @@ async function removeOrder(req, res) {
  */
 
 async function updateOrderByOrderId(req, res) {
-  //implemant the code here
+
+  
   const { orderId } = req.params;
   const { order_description, order_state } = req.body;
 
   // For invalid Id
+  console.log(orderId)
   if (!ObjectId.isValid(orderId)) {
     res.status(400).json({ message: 'Invalid order ID' });
     return;

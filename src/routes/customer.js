@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const customerController = require('../controllers/customerController');
+
 const { validCustomer } = require('../validation/validator');
 
 /**
@@ -10,10 +11,9 @@ const { validCustomer } = require('../validation/validator');
  *   name: Customer
  *   description: API endpoints for customer
  */
-
 /**
  * @swagger
- * /customer:
+ * /api/customer:
  *   get:
  *     tags: [Customer]
  *     summary: Get all customers
@@ -30,7 +30,7 @@ router.post('/',  customerController.addCustomer);
 
 /**
  * @swagger
- * /customer:
+ * /api/customer:
  *   post:
  *     tags: [Customer]
  *     summary: Add a new customer
@@ -52,7 +52,7 @@ router.post('/', validCustomer, customerController.addCustomer);
 
 /**
  * @swagger
- * /customer/{id}:
+ * /api/customer/{id}:
  *   get:
  *     tags: [Customer]
  *     summary: Get a customer by ID
@@ -75,7 +75,7 @@ router.get('/:id', customerController.getCustomerById);
 
 /**
  * @swagger
- * /customer/{id}:
+ * /api/customer/{id}:
  *   put:
  *     tags: [Customer]
  *     summary: Update a customer by ID
@@ -105,7 +105,7 @@ router.put('/:id', customerController.updateCustomer);
 
 /**
  * @swagger
- * /customer/{id}:
+ * /api/customer/{id}:
  *   delete:
  *     tags: [Customer]
  *     summary: Delete a customer by ID
