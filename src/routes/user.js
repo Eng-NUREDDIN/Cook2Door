@@ -13,7 +13,7 @@ const userController = require('../controllers/userController');
 
 /**
  * @swagger
- * /users:
+ * /user:
  *   get:
  *     tags: [Users]
  *     summary: Get all users
@@ -28,7 +28,7 @@ router.get('/', userController.getAllUsers);
 
 /**
  * @swagger
- * /users/signUp:
+ * /user/signUp:
  *   post:
  *     tags: [Users]
  *     summary: Sign up the User
@@ -62,7 +62,7 @@ router.post('/signUp', userController.signUp);
 
 /**
  * @swagger
- * /users/signIn:
+ * /user/signIn:
  *   post:
  *     tags: [Users]
  *     summary: Sign in the User
@@ -95,7 +95,7 @@ router.post('/signIn', userController.signIn);
 
 /**
  * @swagger
- * /users/:id:
+ * /user/:id:
  *   put:
  *     tags: [Users]
  *     summary: Update the User
@@ -124,7 +124,7 @@ router.post('/signIn', userController.signIn);
 router.put('/:id', userController.updateUser);
 /**
  * @swagger
- * /users/:id:
+ * /user/:id:
  *   delete:
  *     tags: [Users]
  *     summary: Remove the User
