@@ -68,7 +68,7 @@ if (email.trim() === '' || password.trim() === '') {
   res.status(400).json({ error: 'Email and password cannot be empty' });
   return;
 }
-
+;
     const user = await userSchema.findOne({ email: email});
 
     if (!user) {

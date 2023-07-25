@@ -35,10 +35,10 @@ userSchema.pre('save', async function (next) {
       user.password = hashedPassword;
     }
 
-    if (user.isModified('email')) {
-      const hashedEmail = await bcrypt.hash(user.email, salt);
-      user.email = hashedEmail;
-    }
+    // if (user.isModified('email')) {
+    //   const hashedEmail = await bcrypt.hash(user.email, salt);
+    //   user.email = hashedEmail;
+    // }
 
     next();
   } catch (error) {

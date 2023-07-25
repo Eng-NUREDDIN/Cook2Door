@@ -95,7 +95,7 @@ router.post('/signIn', userController.signIn);
 
 /**
  * @swagger
- * /api/user/:id:
+ * /api/user/{id}:
  *   put:
  *     tags: [Users]
  *     summary: Update the User
@@ -124,7 +124,7 @@ router.post('/signIn', userController.signIn);
 router.put('/:id', userController.updateUser);
 /**
  * @swagger
- * /api/user/:id:
+ * /api/user/{id}:
  *   delete:
  *     tags: [Users]
  *     summary: Remove the User
