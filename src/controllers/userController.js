@@ -22,8 +22,7 @@ async function getAllUsers(req, res) {
  */
 async function signUp(req, res) {
   try {
-    const { email, password, role } = req.body;
-    console.log(req.body);
+    const { email, password, role } = req.body;    
     // Check for null or undefined values
     if (email === null || email === undefined || password === null || password === undefined) {
       res.status(400).json({ error: 'Email and password are required' });
