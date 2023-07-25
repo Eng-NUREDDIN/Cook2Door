@@ -47,6 +47,7 @@ const { validOrder } = require('../validation/validator');
  */
 router.post('/', validOrder, orderController.addOrder);
 
+
 /**
  * @swagger
  * /api/order/{id}:
@@ -68,7 +69,7 @@ router.post('/', validOrder, orderController.addOrder);
  *         description: Internal server error
  */
 
- router.get('/:id', orderController.getOrderById);
+ router.get('/:id', orderController.getOrderByOrderId);
 
 /**
  * @swagger
@@ -99,7 +100,7 @@ router.post('/', validOrder, orderController.addOrder);
  *         description: Internal server error
  */
 
- router.put('/:id', orderController.updateOrder);
+ router.put('/:id', orderController.updateOrderByOrderId);
 
 /**
  * @swagger
@@ -123,6 +124,12 @@ router.post('/', validOrder, orderController.addOrder);
  */
 
  router.delete('/:id', orderController.removeOrder);
+
+router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId)
+router.get('/cookId/:cookId', orderController.getAllOrdersByCookId)
+
+router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId)
+router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState)
 
  module.exports = router;
 

@@ -25,6 +25,9 @@ const { validCustomer } = require('../validation/validator');
  */
 router.get('/', customerController.getAllCustomers);
 
+router.post('/',  customerController.addCustomer);
+
+
 /**
  * @swagger
  * /customer:
@@ -67,6 +70,7 @@ router.post('/', validCustomer, customerController.addCustomer);
  *       500:
  *         description: Internal server error
  */
+
 router.get('/:id', customerController.getCustomerById);
 
 /**
