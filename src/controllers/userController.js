@@ -41,9 +41,7 @@ async function signUp(req, res) {
       res.status(400).json({ error: 'Role is required' });
       return;
     }
-    const hashedEmail = await bcrypt.hash(email, 10);
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new userSchema({ hashedEmail, hashedPassword, role });
+    const newUser = new userSchema({ email, password, role });
     await newUser.save();
     res.json({ message: 'User created successfully' });
   } catch (error) {
@@ -70,8 +68,8 @@ if (email.trim() === '' || password.trim() === '') {
   res.status(400).json({ error: 'Email and password cannot be empty' });
   return;
 }
-     const hashedEmail = await bcrypt.hash(email, 10);
-    const user = await userSchema.findOne({ email:hashedEmail});
+
+    const user = await userSchema.findOne({ email: email});
 
     if (!user) {
       res.status(401).json({ error: 'Invalid credentials' });
