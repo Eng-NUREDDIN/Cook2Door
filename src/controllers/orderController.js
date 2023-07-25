@@ -49,7 +49,7 @@ async function addOrder(req, res) {
 
   
     // Check if the customer exists
-
+try{
 
     const resCustomer = await axios.get(
       `http://localhost:3000/api/customer/${customer_id}`

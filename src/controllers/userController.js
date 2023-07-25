@@ -23,6 +23,7 @@ async function getAllUsers(req, res) {
 async function signUp(req, res) {
   try {
     const { email, password, role } = req.body;
+    console.log(req.body);
     // Check for null or undefined values
     if (email === null || email === undefined || password === null || password === undefined) {
       res.status(400).json({ error: 'Email and password are required' });
@@ -46,7 +47,7 @@ async function signUp(req, res) {
     await newUser.save();
     res.json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: error, message: req.body });
   }
 }
 
