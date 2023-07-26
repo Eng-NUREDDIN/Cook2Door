@@ -1,15 +1,17 @@
-  const express = require('express');
+const express = require('express');
 
- const router = express.Router();
+const router = express.Router();
 
 const orderController = require('../controllers/orderController');
-const { validOrder } = require('../validation/validator');
+//const { validOrder } = require('../validation/validator');
+
 /**
  * @swagger
  * tags:
  *   name: Order
  *   description: API endpoints for Order
  */
+
 /**
  * @swagger
  * /api/order/:
@@ -22,8 +24,7 @@ const { validOrder } = require('../validation/validator');
  *       400:
  *         description: Internal server error
  */
-
- router.get('/', orderController.getAllOrders);
+router.get('/', orderController.getAllOrders);
 
 /**
  * @swagger
@@ -40,46 +41,46 @@ const { validOrder } = require('../validation/validator');
  *     responses:
  *       201:
  *         description: Order successfully added
- *       400:
+ *       404:
  *         description: Invalid request
  *       500:
  *         description: Internal server error
  */
-router.post('/', validOrder, orderController.addOrder);
-
+router.post('/', orderController.addOrder);
 
 /**
  * @swagger
- * /api/order/{id}:
+ * /api/order/{orderId}:
  *   get:
  *     tags: [Order]
  *     summary: Get a order by ID
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: orderId
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
  *         description: Successful operation
+ *       400:
+ *         description: Invalid request
  *       404:
  *         description: Order not found
  *       500:
  *         description: Internal server error
  */
-
- router.get('/:id', orderController.getOrderByOrderId);
+router.get('/:orderId', orderController.getOrderByOrderId);
 
 /**
  * @swagger
- * /api/order/{id}:
+ * /api/order/{orderId}:
  *   put:
  *     tags: [Order]
  *     summary: Update a order by ID
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: orderId
  *         required: true
  *         schema:
  *           type: string
@@ -99,18 +100,17 @@ router.post('/', validOrder, orderController.addOrder);
  *       500:
  *         description: Internal server error
  */
-
- router.put('/:id', orderController.updateOrderByOrderId);
+router.put('/:orderId', orderController.updateOrderByOrderId);
 
 /**
  * @swagger
- * /api/order/{id}:
+ * /api/order/{orderId}:
  *   delete:
  *     tags: [Order]
  *     summary: Delete a order by ID
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: orderId
  *         required: true
  *         schema:
  *           type: string
@@ -122,15 +122,112 @@ router.post('/', validOrder, orderController.addOrder);
  *       500:
  *         description: Internal server error
  */
+router.delete('/:orderId', orderController.removeOrder);
 
- router.delete('/:id', orderController.removeOrder);
+/**
+ * @swagger
+ * /api/order/customerId/{customerId}:
+ *   get:
+ *     tags: [Customer]
+ *     summary: get Orders by customerId
+ *     parameters:
+ *       - in: path
+ *         name: customerId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: JSON file including all orders by this customer
+ *       400:
+ *         description: Invalid Customer ID
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId);
 
-router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId)
-router.get('/cookId/:cookId', orderController.getAllOrdersByCookId)
+/**
+ * @swagger
+ * /api/order/cookId/{cookId}:
+ *   get:
+ *     tags: [Cooks]
+ *     summary: get Orders by cookId
+ *     parameters:
+ *       - in: path
+ *         name: cookId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       201:
+ *         description: JSON file including all orders by this cook
+ *       400:
+ *         description: Invalid cook ID
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/cookId/:cookId', orderController.getAllOrdersByCookId);
 
-router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId)
-router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState)
+/**
+ * @swagger
+ * /api/order/{customerId}/{orderId}:
+ *   put:
+ *     tags: [Customer]
+ *     summary: Update order by customerId and orderId
+ *     parameters:
+ *       - in: path
+ *         name: customerId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       201:
+ *         description: updated order
+ *       400:
+ *         description: Invalid cook ID
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId);
 
- module.exports = router;
+/**
+ * @swagger
+ * /api/order/{orderId}/{cookId}/stateUpdate:
+ *   put:
+ *     tags: [Customer]
+ *     summary: Update the state of order
+ *     parameters:
+ *       - in: path
+ *         name: customerId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       201:
+ *         description: updated order
+ *       400:
+ *         description: Invalid cook ID
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState);
 
-
+module.exports = router;

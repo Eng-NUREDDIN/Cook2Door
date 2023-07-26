@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const axios = require('axios');
 
-
 /**
  * This return all Orders
  * @param {*} req
@@ -27,10 +26,8 @@ async function getAllOrders(req, res) {
  * @param {*} res
  */
 async function addOrder(req, res) {
-  
   const { cook_id, dish_id, customer_id, order_description } = req.body;
-  
-  
+
   // For invalid Id
   if (!ObjectId.isValid(cook_id)) {
     res.status(400).json({ message: 'Invalid cook ID' });
@@ -46,27 +43,6 @@ async function addOrder(req, res) {
     res.status(400).json({ message: 'Invalid customer ID' });
     return;
   }
-
-  
-    // Check if the customer exists
-
-
-    const resCustomer = await axios.get(
-      `http://localhost:3000/api/customer/${customer_id}`
-    );
-    
-    // Customer Data in respond of API
-    const customer = resCustomer.data;
-  
-    // If custome is not found, handle the error
-    if (!customer) {
-        return res.status(404).json({ error: 'customer not found' });
-    }
-  }
-  catch(err){
-    if (err.response.status == 404)
-      return res.status(404).json({ error: 'customer not found' });
-    }
 
   try {
     // Check if the dish exists
@@ -95,6 +71,19 @@ async function addOrder(req, res) {
       return res.status(404).json({ message: 'Cook not found' });
     }
 
+    // Check if the customer exists
+    const resCustomer = await axios.get(
+      `http://localhost:3000/api/customer/${customer_id}`
+    );
+
+    // Customer Data in respond of API
+    const customer = resCustomer.data;
+
+    // If custome is not found, handle the error
+    if (!customer) {
+      return res.status(404).json({ error: 'customer not found' });
+    }
+
     // Creates a new order instance using the orderSchema and the provided request body
     const newOrder = new orderSchema({
       cook_id,
@@ -107,9 +96,8 @@ async function addOrder(req, res) {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
   } catch (err) {
-    // console.log(err)
-     // If an error occurs, sends a 400 (Bad Request) status with the error message
-     res.status(500).json({ error: 'Internal server error' });
+    // If an error occurs, sends a 400 (Bad Request) status with the error message
+    res.status(500).json({ error: err });
   }
 }
 
@@ -120,7 +108,6 @@ async function addOrder(req, res) {
  */
 
 async function getOrderByOrderId(req, res) {
-  
   const { orderId } = req.params;
 
   // For invalid Id
@@ -146,12 +133,11 @@ async function getOrderByOrderId(req, res) {
 
 /**
  * return all orders which has same customerId
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
-async function getAllOrdersByCustomerId( req, res ){
-
-  const {customerId} = req.params
+async function getAllOrdersByCustomerId(req, res) {
+  const { customerId } = req.params;
 
   // For invalid Id
   if (!ObjectId.isValid(customerId)) {
@@ -159,29 +145,27 @@ async function getAllOrdersByCustomerId( req, res ){
     return;
   }
 
-  try{
+  try {
     // Fetches orders from the orderSchema by their customerId using the find() method
-    const order = await orderSchema.find({customer_id: customerId})
-    if ( !order ){
+    const order = await orderSchema.find({ customer_id: customerId });
+    if (!order) {
       // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
       return res.status(404).json({ message: 'Order not found' });
     }
 
     res.status(201).json(order);
-
-  } catch( err ){
-    res.status(400).json({message: err.message})
+  } catch (err) {
+    res.status(500).json({ message: err });
   }
 }
 
 /**
  * return all orders which have same cookId
- * @param {*} res 
- * @param {*} req 
+ * @param {*} res
+ * @param {*} req
  */
-async function getAllOrdersByCookId( req, res ){
-
-  const {cookId}= req.params
+async function getAllOrdersByCookId(req, res) {
+  const { cookId } = req.params;
 
   // For invalid Id
   if (!ObjectId.isValid(cookId)) {
@@ -189,18 +173,17 @@ async function getAllOrdersByCookId( req, res ){
     return;
   }
 
-  try{
+  try {
     // Fetches orders from the orderSchema by their cookId using the find() method
-    const order = await orderSchema.find({cook_id: cookId})
-    if ( !order ){
+    const order = await orderSchema.find({ cook_id: cookId });
+    if (!order) {
       // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
       return res.status(404).json({ message: 'Order not found' });
     }
 
     res.status(201).json(order);
-
-  }catch (err) {
-    res.status(400).json({message: err.message})
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 }
 
@@ -226,7 +209,6 @@ async function removeOrder(req, res) {
     if (!order) {
       // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
       return res.status(404).json({ message: 'Order not found' });
-
     }
 
     res.status(201).json({ message: 'Order removed successfully' });
@@ -243,11 +225,11 @@ async function removeOrder(req, res) {
  */
 
 async function updateOrderByOrderId(req, res) {
-  //implemant the code here
   const { orderId } = req.params;
   const { order_description, order_state } = req.body;
 
   // For invalid Id
+  console.log(orderId);
   if (!ObjectId.isValid(orderId)) {
     res.status(400).json({ message: 'Invalid order ID' });
     return;
@@ -274,8 +256,8 @@ async function updateOrderByOrderId(req, res) {
 
 /**
  * update order description from customer
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 async function updateOrderByCustomerId(req, res) {
   //implemant the code here
@@ -294,10 +276,10 @@ async function updateOrderByCustomerId(req, res) {
   }
 
   try {
-    // Finds an order by customerId and OrderId and 
-    // updates it with the provided order description 
+    // Finds an order by customerId and OrderId and
+    // updates it with the provided order description
     const order = await orderSchema.findOneAndUpdate(
-      {_id: orderId, customer_id: customerId},
+      { _id: orderId, customer_id: customerId },
       { order_description: order_description, updated_at: Date.now() },
       { new: true }
     );
@@ -317,8 +299,8 @@ async function updateOrderState(req, res) {
   //implemant the code here
   const { orderId, cookId } = req.params;
   const { orderState } = req.body;
-  
-    // For invalid Id
+
+  // For invalid Id
   if (!ObjectId.isValid(orderId)) {
     res.status(400).json({ message: 'Invalid order ID' });
     return;
@@ -329,17 +311,16 @@ async function updateOrderState(req, res) {
     return;
   }
 
-  try { 
+  try {
     // Finds an order by its ID and updates it with the provided order description using the findByIdAndUpdate() method
     const order = await orderSchema.findOneAndUpdate(
-      {_id: orderId, cook_id: cookId},
+      { _id: orderId, cook_id: cookId },
       { order_state: orderState, updated_at: Date.now() },
       { new: true }
     );
     if (!order) {
       // If the order is not found, sends a 404 (Not Found) status with an appropriate error message
       return res.status(404).json({ message: 'Order not found' });
-
     }
 
     res.status(201).json(order);
@@ -358,5 +339,5 @@ module.exports = {
   removeOrder,
   updateOrderByOrderId,
   updateOrderByCustomerId,
-  updateOrderState
+  updateOrderState,
 };
