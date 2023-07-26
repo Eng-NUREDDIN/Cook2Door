@@ -65,7 +65,6 @@ async function addCustomer(req, res) {
   }
 }
 
-
 /**
  * Get Customer by its id
  * @param {*} req

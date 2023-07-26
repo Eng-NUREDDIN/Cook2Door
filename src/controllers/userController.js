@@ -25,7 +25,12 @@ async function signUp(req, res) {
   try {
     const { email, password, role } = req.body;    
     // Check for null or undefined values
-    if (email === null || email === undefined || password === null || password === undefined) {
+    if (
+      email === null ||
+      email === undefined ||
+      password === null ||
+      password === undefined
+    ) {
       res.status(400).json({ error: 'Email and password are required' });
       return;
     }
@@ -36,7 +41,7 @@ async function signUp(req, res) {
       return;
     }
 
-    // check for the role value 
+    // check for the role value
     if (role === null || role === undefined || role.trim() === '') {
       res.status(400).json({ error: 'Role is required' });
       return;
@@ -59,11 +64,16 @@ async function signUp(req, res) {
 async function signIn(req, res) {
   try {
     const { email, password } = req.body;
-// Check for null or undefined values in email and password
-if (email === null || email === undefined || password === null || password === undefined) {
-  res.status(400).json({ error: 'Email and password are required' });
-  return;
-}
+    // Check for null or undefined values in email and password
+    if (
+      email === null ||
+      email === undefined ||
+      password === null ||
+      password === undefined
+    ) {
+      res.status(400).json({ error: 'Email and password are required' });
+      return;
+    }
 
 // Check for empty values (for strings) in email and password
 if (email.trim() === '' || password.trim() === '') {
@@ -100,29 +110,38 @@ async function updateUser(req, res) {
   try {
     const { id } = req.params;
     const updatedUser = req.body;
-        // Check for null or undefined values in email, password, and role
-        if (
-          updatedUser.email === null || updatedUser.email === undefined ||
-          updatedUser.password === null || updatedUser.password === undefined
-        ) {
-          res.status(400).json({ error: 'Email and password are required' });
-          return;
-        }
-    
-        // Check for empty values (for strings) in email, password, and role
-        if (
-          updatedUser.email.trim() === '' || updatedUser.password.trim() === '' ||
-          (updatedUser.role !== undefined && updatedUser.role.trim() === '')
-        ) {
-          res.status(400).json({ error: 'Email, password, and role cannot be empty' });
-          return;
-        }
-    
-        // check for the role value
-        if (updatedUser.role === null || updatedUser.role === undefined || updatedUser.role.trim() === '') {
-          res.status(400).json({ error: 'Role is required' });
-          return;
-        }
+    // Check for null or undefined values in email, password, and role
+    if (
+      updatedUser.email === null ||
+      updatedUser.email === undefined ||
+      updatedUser.password === null ||
+      updatedUser.password === undefined
+    ) {
+      res.status(400).json({ error: 'Email and password are required' });
+      return;
+    }
+
+    // Check for empty values (for strings) in email, password, and role
+    if (
+      updatedUser.email.trim() === '' ||
+      updatedUser.password.trim() === '' ||
+      (updatedUser.role !== undefined && updatedUser.role.trim() === '')
+    ) {
+      res
+        .status(400)
+        .json({ error: 'Email, password, and role cannot be empty' });
+      return;
+    }
+
+    // check for the role value
+    if (
+      updatedUser.role === null ||
+      updatedUser.role === undefined ||
+      updatedUser.role.trim() === ''
+    ) {
+      res.status(400).json({ error: 'Role is required' });
+      return;
+    }
     await userSchema.findByIdAndUpdate(id, updatedUser);
     res.json({ message: 'User updated successfully' });
   } catch (error) {

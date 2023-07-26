@@ -59,36 +59,38 @@ const options = {
               type: 'string',
             },
           },
-          required: ['customer_email', 'customer_name', 'customer_address', 'birthdate', 'password'],
-        },   
-          Order_Add: {
-            type: 'object',
-            properties: {
-              dish_id: {
-                type: 'string',
-              },
-              order_description: {
-                type: 'string',
-              },
-              customer_id: {
-                type: 'string',
-              },
+          required: [
+            'customer_email',
+            'customer_name',
+            'customer_address',
+            'birthdate',
+            'password',
+          ],
+        },
+        Order_Add: {
+          type: 'object',
+          properties: {
+            dish_id: {
+              type: 'string',
             },
-            required: ['dish_id', 'customer_id', 'order_description'],
-          },
-          Order_Update :{
-            
-            type: 'object',
-            properties: {
-              
-              order_description: {
-                type: 'string',
-              },
-              
+            order_description: {
+              type: 'string',
             },
-            required: [ 'order_description'],
-
+            customer_id: {
+              type: 'string',
+            },
           },
+          required: ['dish_id', 'customer_id', 'order_description'],
+        },
+        Order_Update: {
+          type: 'object',
+          properties: {
+            order_description: {
+              type: 'string',
+            },
+          },
+          required: ['order_description'],
+        },
         Cook_Get_By_ID: {
           type: 'object',
           properties: {
@@ -155,7 +157,7 @@ const options = {
           },
           required: ['cook_id'],
         },
-        userSchema: { 
+        userSchema: {
           type: 'object',
           properties: {
             email: {
@@ -196,28 +198,27 @@ const options = {
             required: ['email', 'password', 'role'],
           },
         },
-          User_update: {
-            type: 'object',
-            properties: {
-              email: {
-                type: 'string',
-              },
-              password: {
-                type: 'string',
-              },
-              role: {
-                type: 'string',
-                enum: ['COOK', 'CUSTOMER'],
-              },
-              required: ['email', 'password', 'role'],
+        User_update: {
+          type: 'object',
+          properties: {
+            email: {
+              type: 'string',
             },
+            password: {
+              type: 'string',
+            },
+            role: {
+              type: 'string',
+              enum: ['COOK', 'CUSTOMER'],
+            },
+            required: ['email', 'password', 'role'],
           },
+        },
       },
     },
   },
   apis: [path.resolve(__dirname, '../routes/*.js')], // Path to route files
 };
-
 
 const specs = swaggerJsdoc(options);
 
