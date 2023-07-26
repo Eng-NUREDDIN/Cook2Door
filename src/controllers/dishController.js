@@ -23,6 +23,9 @@ async function getAllDishes(req, res) {
  * @param {*} res
  */
 async function addDish(req, res) {
+  if (req.user.role !== 'COOK') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     // Extract dish data from the request body
     const { dish_name, dish_ingredient, cook_id } = req.body;
@@ -90,6 +93,9 @@ async function getDishById(req, res) {
  * @param {*} res
  */
 async function removeDish(req, res) {
+  if (req.user.role !== 'COOK') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   // Extract dish id from the request parameters
   const { id } = req.params;
 
@@ -120,6 +126,9 @@ async function removeDish(req, res) {
  * @param {*} res
  */
 async function updateDish(req, res) {
+  if (req.user.role !== 'COOK') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   // Extract dish id from the request parameters
   const { id } = req.params;
 

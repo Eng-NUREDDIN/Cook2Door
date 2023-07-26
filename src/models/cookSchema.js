@@ -22,9 +22,8 @@ const cookSchema = mongoose.Schema({
     minLength: [3, 'Cook name should not be less than 3 characters.'],
   },
   cooker_id: {
-    //type: mongoose.Schema.Types.ObjectId,
-    //ref: 'UserSchema',
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserSchema',    
     required: [true, 'Cooker id is required.'],
   },
   created_at: {

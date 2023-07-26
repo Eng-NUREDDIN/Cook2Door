@@ -10,6 +10,7 @@ const router = express.Router();
 
 const cookController = require('../controllers/cookController');
 const { validCook } = require('../validation/validator');
+const  authMiddleware  = require('../configuration/authMiddleware');
 
 /**
  * @swagger
@@ -21,7 +22,7 @@ const { validCook } = require('../validation/validator');
  *       200:
  *         description: Success
  */
-router.get('/', cookController.getAllCooks);
+router.get('/',authMiddleware, cookController.getAllCooks);
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ router.get('/', cookController.getAllCooks);
  *       500:
  *         description: Internal server error
  */
-router.post('/add', cookController.addCook);
+router.post('/add',authMiddleware, cookController.addCook);
 /**
  * @swagger
  * /api/cook/{id}:
@@ -64,7 +65,7 @@ router.post('/add', cookController.addCook);
  *       500:
  *         description: Internal server error
  */
-router.get('/:id', cookController.getCookById);
+router.get('/:id',authMiddleware, cookController.getCookById);
 /**
  * @swagger
  * /api/cook/{id}:
@@ -93,7 +94,7 @@ router.get('/:id', cookController.getCookById);
  *       500:
  *         description: Internal server error
  */
-router.put('/:id', cookController.updateCook);
+router.put('/:id',authMiddleware, cookController.updateCook);
 /**
  * @swagger
  * /api/cook/{id}:
@@ -114,7 +115,7 @@ router.put('/:id', cookController.updateCook);
  *       500:
  *         description: Internal server error
  */
-router.delete('/:id', cookController.removeCook);
+router.delete('/:id',authMiddleware, cookController.removeCook);
 
 // for future
 // router.get('/comment/{id}', cookController.getCookComment)

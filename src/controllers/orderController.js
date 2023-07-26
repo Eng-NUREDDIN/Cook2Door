@@ -27,6 +27,9 @@ async function getAllOrders(req, res) {
  * @param {*} res
  */
 async function addOrder(req, res) {
+  if (req.user.role !== 'CUSTOMER') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   
   const { cook_id, dish_id, customer_id, order_description } = req.body;
   
@@ -150,6 +153,9 @@ async function getOrderByOrderId(req, res) {
  * @param {*} res 
  */
 async function getAllOrdersByCustomerId( req, res ){
+  if (req.user.role !== 'COOK' || req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
 
   const {customerId} = req.params
 
@@ -181,6 +187,9 @@ async function getAllOrdersByCustomerId( req, res ){
  */
 async function getAllOrdersByCookId( req, res ){
 
+  if (req.user.role !== 'COOK' || req.user.role !== 'ADMIN') {  
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   const {cookId}= req.params
 
   // For invalid Id
@@ -243,6 +252,9 @@ async function removeOrder(req, res) {
  */
 
 async function updateOrderByOrderId(req, res) {
+  if (req.user.role !== 'CUSTOMER') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   //implemant the code here
   const { orderId } = req.params;
   const { order_description, order_state } = req.body;
@@ -278,6 +290,9 @@ async function updateOrderByOrderId(req, res) {
  * @param {*} res 
  */
 async function updateOrderByCustomerId(req, res) {
+  if (req.user.role !== 'COOK' || req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   //implemant the code here
   const { customerId, orderId } = req.params;
   const { order_description } = req.body;
@@ -314,6 +329,9 @@ async function updateOrderByCustomerId(req, res) {
 }
 
 async function updateOrderState(req, res) {
+  if (req.user.role !== 'COOK' || req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   //implemant the code here
   const { orderId, cookId } = req.params;
   const { orderState } = req.body;

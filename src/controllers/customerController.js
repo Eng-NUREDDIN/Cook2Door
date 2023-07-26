@@ -9,6 +9,9 @@ const axios = require('axios');
  * @param {*} res
  */
 async function getAllCustomers(req, res) {
+  if (req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const customers = await customerSchema.find();
     res.status(200).json(customers);
@@ -16,7 +19,7 @@ async function getAllCustomers(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
+// for deletion////
 /**
  * Add a new Customer to the Customer schema
  * @param {*} req
@@ -69,6 +72,9 @@ async function addCustomer(req, res) {
  * @param {*} res
  */
 async function getCustomerById(req, res) {
+  if (req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const { id } = req.params;
     const customer = await customerSchema.findById(id);
@@ -88,6 +94,9 @@ async function getCustomerById(req, res) {
  * @param {*} res
  */
 async function removeCustomer(req, res) {
+  if (req.user.role !== 'ADMIN' || req.user.role !== 'CUSTOMER') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const { id } = req.params;
     const removedCustomer = await customerSchema.findByIdAndRemove(id);
@@ -107,6 +116,9 @@ async function removeCustomer(req, res) {
  * @param {*} res
  */
 async function updateCustomer(req, res) {
+  if (req.user.role !== 'ADMIN' || req.user.role !== 'CUSTOMER') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const { id } = req.params;
     const {

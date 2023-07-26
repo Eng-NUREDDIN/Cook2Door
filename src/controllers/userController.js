@@ -1,6 +1,7 @@
 const userSchema = require('../models/userSchema');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 /**
  * Return all users
  * @param {*} res
@@ -42,7 +43,9 @@ async function signUp(req, res) {
     }
     const newUser = new userSchema({ email, password, role });
     await newUser.save();
-    res.json({ message: 'User created successfully' });
+    // Create and sign the JWT token
+    const token = jwt.sign({ userId: newUser._id, email: newUser.email, role: newUser.role }, process.env.SECRET_KEY);
+    res.status(200).json({ token, userId: newUser._id, email: newUser.email, role: newUser.role });
   } catch (error) {
     res.status(500).json({ error: error, message: req.body });
   }
@@ -81,8 +84,8 @@ if (email.trim() === '' || password.trim() === '') {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
-
-    res.json({ message: 'Sign-in successful' });
+    const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, process.env.SECRET_KEY);    
+    res.status(200).json({ token, userId: user._id, email: user.email, role: user.role });
   } catch (error) {
     res.status(500).json({ error: error });
   }
