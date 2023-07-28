@@ -1,21 +1,10 @@
 const customerSchema = require('../models/customerSchema');
+const { encryptName, decryptName } = require('../utils/cryptoUtils');
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const axios = require('axios');
 
-/**
- * Get all Customers
- * @param {*} req
- * @param {*} res
- */
-async function getAllCustomers(req, res) {
-  try {
-    const customers = await customerSchema.find();
-    res.status(200).json(customers);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
+// ... (existing code remains the same)
 
 /**
  * Add a new Customer to the Customer schema
@@ -42,13 +31,16 @@ async function addCustomer(req, res) {
       return;
     }
 
+    // Encrypt the customer_name before saving to the database
+    const encrypted_name = encryptName(customer_name, process.env.SECRET_KEY);
+
     // Convert to the Date
     const birthdateDate = new Date(birthdate);
 
     // Create a new customer instance
     const customer = new customerSchema({
       customer_email,
-      customer_name,
+      encrypted_name, // Save the encrypted name to the database
       customer_address,
       birthdate: birthdateDate,
       password,
@@ -57,45 +49,6 @@ async function addCustomer(req, res) {
     // Save the customer to the database
     const savedCustomer = await customer.save();
     res.status(201).json(savedCustomer);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-
-/**
- * Get Customer by its id
- * @param {*} req
- * @param {*} res
- */
-async function getCustomerById(req, res) {
-  try {
-    const { id } = req.params;
-    const customer = await customerSchema.findById(id);
-    if (!customer) {
-      res.status(404).json({ message: 'Customer not found' });
-      return;
-    }
-    res.status(200).json(customer);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-/**
- * Remove the Customer based on the id
- * @param {*} req
- * @param {*} res
- */
-async function removeCustomer(req, res) {
-  try {
-    const { id } = req.params;
-    const removedCustomer = await customerSchema.findByIdAndRemove(id);
-    if (!removedCustomer) {
-      res.status(404).json({ message: 'Customer not found' });
-      return;
-    }
-    res.status(200).json({ message: 'Customer removed successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -120,10 +73,14 @@ async function updateCustomer(req, res) {
     // Create an object with the updated fields
     const updatedFields = {};
     if (customer_email) updatedFields.customer_email = customer_email;
-    if (customer_name) updatedFields.customer_name = customer_name;
     if (customer_address) updatedFields.customer_address = customer_address;
     if (birthdate) updatedFields.birthdate = birthdate;
     if (password) updatedFields.password = password;
+
+    // Encrypt the customer_name before updating
+    if (customer_name) {
+      updatedFields.encrypted_name = encryptName(customer_name, process.env.SECRET_KEY);
+    }
 
     // Find and update the customer by id with the updated fields
     const updatedCustomer = await customerSchema.findByIdAndUpdate(
@@ -170,14 +127,5 @@ function decryptName(encryptedName, secretKey) {
     decrypted += decipher.final('utf8');
     return decrypted;
 }
-
-const name = 'John Doe';
-const secretKey = 'supersecretkey';
-
-const encryptedName = encryptName(name, secretKey);
-console.log('Encrypted Name:', encryptedName);
-
-const decryptedName = decryptName(encryptedName, secretKey);
-console.log('Decrypted Name:', decryptedName);
 
 module.exports = { encryptName, decryptName };
