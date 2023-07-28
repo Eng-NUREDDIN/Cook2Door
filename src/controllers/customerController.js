@@ -1,10 +1,21 @@
 const customerSchema = require('../models/customerSchema');
-const { encryptName, decryptName } = require('../utils/cryptoUtils');
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const axios = require('axios');
 
-// ... (existing code remains the same)
+/**
+ * Get all Customers
+ * @param {*} req
+ * @param {*} res
+ */
+async function getAllCustomers(req, res) {
+  try {
+    const customers = await customerSchema.find();
+    res.status(200).json(customers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
 /**
  * Add a new Customer to the Customer schema
