@@ -1,27 +1,74 @@
+
 const cookSchema = require('../models/cookSchema');
+const crypto = require('crypto');
 
 /**
- * This return all cooks
+ * Generate a random secret key for encryption/decryption
+ * @returns {string} - The random secret key
+ */
+function generateRandomKey() {
+  return crypto.randomBytes(32).toString('hex'); // 32 bytes for AES-256
+}
+
+/**
+ * Encrypt data using a provided key
+ * @param {string} data - The data to encrypt
+ * @param {string} key - The secret key for encryption
+ * @returns {string} - The encrypted data
+ */
+function encrypt(data, key) {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
+  let encrypted = cipher.update(data);
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return iv.toString('hex') + ':' + encrypted.toString('hex');
+}
+
+/**
+ * Decrypt data using a provided key
+ * @param {string} encryptedData - The encrypted data
+ * @param {string} key - The secret key for decryption
+ * @returns {string} - The decrypted data
+ */
+function decrypt(encryptedData, key) {
+  const [iv, encryptedText] = encryptedData.split(':').map((part) => Buffer.from(part, 'hex'));
+  const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+}
+
+/**
+ * This returns all cooks
  * @param {*} req
  * @param {*} res
  */
 async function getAllCooks(req, res) {
   try {
     const cooks = await cookSchema.find();
-    res.status(200).json(cooks);
+    // Decrypt the data before responding
+    const decryptedCooks = cooks.map((cook) => ({
+      ...cook.toObject(),
+      // Add more fields here if needed
+    }));
+    res.status(200).json(decryptedCooks);
   } catch (error) {
     res.status(500).json({ error: error });
   }
 }
 
 /**
- * Add new cook into the cook schema
+ * Add a new cook into the cook schema
  * @param {*} req
  * @param {*} res
  */
 async function addCook(req, res) {
   try {
-    const newCook = new cookSchema(req.body);
+    // Generate a unique secret key for this data entry
+    const secretKey = generateRandomKey();
+    // Encrypt the input data before saving
+    const encryptedData = encrypt(JSON.stringify(req.body), secretKey);
+    const newCook = new cookSchema({ encryptedData, secretKey });
     const savedCook = await newCook.save();
     res.status(200).json(savedCook);
   } catch (error) {
@@ -30,7 +77,7 @@ async function addCook(req, res) {
 }
 
 /**
- * Get cook by its id
+ * Get a cook by its id
  * @param {*} req
  * @param {*} res
  */
@@ -39,20 +86,19 @@ async function getCookById(req, res) {
     const cookId = req.params.id;
     const cook = await cookSchema.findById(cookId);
     if (!cook) {
-      res.status(404).json({ error: error });
+      res.status(404).json({ error: 'Cook not found' });
     } else {
-      res.status(200).json(cook);
+      // Decrypt the data before responding
+      const decryptedCook = {
+        ...JSON.parse(decrypt(cook.encryptedData, cook.secretKey)),
+        // Add more fields here if needed
+      };
+      res.status(200).json(decryptedCook);
     }
   } catch (error) {
     res.status(500).json({ error: error });
   }
 }
-
-/**
- * remove the cook based on the id
- * @param {*} req
- * @param {*} res
- */
 async function removeCook(req, res) {
   try {
     const cookId = req.params.id;
@@ -66,12 +112,6 @@ async function removeCook(req, res) {
     res.status(500).json({ error: error });
   }
 }
-
-/**
- * Update the cook based on its id
- * @param {*} req
- * @param {*} res
- */
 async function updateCook(req, res) {
   try {
     const cookId = req.params.id;
@@ -88,6 +128,8 @@ async function updateCook(req, res) {
   }
 }
 
+
+
 module.exports = {
   getAllCooks: getAllCooks,
   addCook: addCook,
@@ -95,3 +137,4 @@ module.exports = {
   removeCook: removeCook,
   updateCook: updateCook,
 };
+
