@@ -1,23 +1,41 @@
 const mongoose = require('mongoose');
 
-const orderSchema = new mongoose.Schema ({
-    dish_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'dishSchema'
-    },
-    customer_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        // changed it based on the name which is decided for cook Schema
-        ref: 'customerSchema'
-    },
-    order_description: {
-        type: String,
-        require: false
-    },
-    created_at: {
-        type: Date,
-        default: Date.now()
-    }
-})
+const orderSchema = new mongoose.Schema({
+  cook_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'CookSchema',
+  },
+  dish_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'dishSchema',
+  },
+  customer_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'customerSchema',
+  },
+  order_description: {
+    type: String,
+    required: false,
+  },
+  order_state: {
+    type: String,
+    enum: ['Pending', 'Preparing', 'Rejected', 'OTW', 'Delivered'],
+    default: 'Pending',
+    required: true,
+  },
+  created_at: {
+    type: Date,
+    required: true,
+    default: Date.now(),
+  },
+  updated_at: {
+    type: Date,
+    required: true,
+    default: Date.now(),
+  },
+});
 
-module.exports = mongoose.model('orderSchema', orderSchema)
+module.exports = mongoose.model('orderSchema', orderSchema);

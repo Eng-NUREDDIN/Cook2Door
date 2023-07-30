@@ -15,11 +15,15 @@
     "postinstall": "husky install && husky add .husky/pre-commit \"yarn validate-staged\" && husky add .husky/pre-push \"yarn test\""
   },
   "dependencies": {
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "express-validator": "^7.0.1",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "yarn-upgrade-all": "^0.6.1"
   },
   "devDependencies": {
