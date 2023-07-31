@@ -21,6 +21,10 @@ const  authMiddleware  = require('../configuration/authMiddleware');
  *     responses:
  *       200:
  *         description: Success
+ *      500:
+ *        description: Internal Server Error
+ *      401:
+ *        description: Unauthorized
  */
 router.get('/',authMiddleware, cookController.getAllCooks);
 
@@ -43,6 +47,8 @@ router.get('/',authMiddleware, cookController.getAllCooks);
  *         description: Invalid request
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
 router.post('/add',authMiddleware, cookController.addCook);
 /**
@@ -64,6 +70,8 @@ router.post('/add',authMiddleware, cookController.addCook);
  *         description: Cook not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
 router.get('/:id',authMiddleware, cookController.getCookById);
 /**
@@ -93,6 +101,8 @@ router.get('/:id',authMiddleware, cookController.getCookById);
  *         description: Cook not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
 router.put('/:id',authMiddleware, cookController.updateCook);
 /**
@@ -114,6 +124,8 @@ router.put('/:id',authMiddleware, cookController.updateCook);
  *         description: Cook not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
 router.delete('/:id',authMiddleware, cookController.removeCook);
 
