@@ -71,7 +71,7 @@ async function addCustomer(req, res) {
  * @param {*} res
  */
 async function getCustomerById(req, res) {
-  if (req.user.role !== 'ADMIN') {
+  if (req.user.role !== 'ADMIN' || req.user.role !== 'CUSTOMER') {
     return res.status(403).json({ error: 'Forbidden - Access denied' });
   }
   try {

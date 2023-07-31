@@ -22,8 +22,10 @@ const { validCustomer } = require('../validation/validator');
  *         description: Successful operation
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.get('/', customerController.getAllCustomers);
+router.get('/',authMiddleware, customerController.getAllCustomers);
 
 router.post('/', customerController.addCustomer);
 
@@ -68,9 +70,11 @@ router.post('/', validCustomer, customerController.addCustomer);
  *         description: Customer not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
 
-router.get('/:id', customerController.getCustomerById);
+router.get('/:id',authMiddleware, customerController.getCustomerById);
 
 /**
  * @swagger
@@ -99,8 +103,10 @@ router.get('/:id', customerController.getCustomerById);
  *         description: Customer not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.put('/:id', customerController.updateCustomer);
+router.put('/:id',authMiddleware, customerController.updateCustomer);
 
 /**
  * @swagger
@@ -121,7 +127,9 @@ router.put('/:id', customerController.updateCustomer);
  *         description: Customer not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.delete('/:id', customerController.removeCustomer);
+router.delete('/:id',authMiddleware, customerController.removeCustomer);
 
 module.exports = router;
