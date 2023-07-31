@@ -44,7 +44,7 @@ router.get('/', dishController.getAllDishes);
  *       500:
  *         description: Internal server error
  */
-router.post('/add', dishController.addDish);
+router.post('/add', authMiddleware, dishController.addDish);
 
 /**
  * @swagger
@@ -65,6 +65,8 @@ router.post('/add', dishController.addDish);
  *         description: Dish not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
 router.get('/:id', dishController.getDishById);
 
@@ -95,8 +97,10 @@ router.get('/:id', dishController.getDishById);
  *         description: Dish not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.put('/:id', dishController.updateDish);
+router.put('/:id',authMiddleware, dishController.updateDish);
 
 /**
  * @swagger
@@ -117,7 +121,9 @@ router.put('/:id', dishController.updateDish);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.delete('/:id', dishController.removeDish);
+router.delete('/:id',authMiddleware, dishController.removeDish);
 
 module.exports = router;
