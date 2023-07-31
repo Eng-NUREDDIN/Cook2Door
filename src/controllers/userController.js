@@ -22,7 +22,7 @@ async function getAllUsers(req, res) {
  */
 async function signUp(req, res) {
   try {
-    const { email, password, role } = req.body;
+    const { email, password, role } = req.body;    
     // Check for null or undefined values
     if (
       email === null ||
@@ -45,13 +45,11 @@ async function signUp(req, res) {
       res.status(400).json({ error: 'Role is required' });
       return;
     }
-    const hashedEmail = await bcrypt.hash(email, 10);
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new userSchema({ hashedEmail, hashedPassword, role });
+    const newUser = new userSchema({ email, password, role });
     await newUser.save();
     res.json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: error, message: req.body });
   }
 }
 

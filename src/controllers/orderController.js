@@ -44,6 +44,30 @@ async function addOrder(req, res) {
     return;
   }
 
+<<<<<<< HEAD
+  
+    // Check if the customer exists
+try{
+
+    const resCustomer = await axios.get(
+      `http://localhost:3000/api/customer/${customer_id}`
+    );
+    
+    // Customer Data in respond of API
+    const customer = resCustomer.data;
+  
+    // If custome is not found, handle the error
+    if (!customer) {
+        return res.status(404).json({ error: 'customer not found' });
+    }
+  }
+  catch(err){
+    if (err.response.status == 404)
+      return res.status(404).json({ error: 'customer not found' });
+    }
+
+=======
+>>>>>>> 56f1bebeb76220aebba3d7336a38470979d1f1bd
   try {
     // Check if the dish exists
     const resDish = await axios.get(
