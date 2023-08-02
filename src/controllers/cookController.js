@@ -20,6 +20,9 @@ async function getAllCooks(req, res) {
  * @param {*} res
  */
 async function addCook(req, res) {
+  if (req.user.role !== 'COOK') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const newCook = new cookSchema(req.body);
     const savedCook = await newCook.save();
@@ -54,6 +57,9 @@ async function getCookById(req, res) {
  * @param {*} res
  */
 async function removeCook(req, res) {
+  if (req.user.role !== 'COOK' || req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const cookId = req.params.id;
     const removedCook = await cookSchema.findByIdAndRemove(cookId);
@@ -73,6 +79,9 @@ async function removeCook(req, res) {
  * @param {*} res
  */
 async function updateCook(req, res) {
+  if (req.user.role !== 'COOK' || req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Forbidden - Access denied' });
+  }
   try {
     const cookId = req.params.id;
     const updatedCook = await cookSchema.findByIdAndUpdate(cookId, req.body, {

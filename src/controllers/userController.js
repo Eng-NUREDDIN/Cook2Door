@@ -1,6 +1,7 @@
 const userSchema = require('../models/userSchema');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 /**
  * Return all users
  * @param {*} res
@@ -47,7 +48,9 @@ async function signUp(req, res) {
     }
     const newUser = new userSchema({ email, password, role });
     await newUser.save();
-    res.json({ message: 'User created successfully' });
+    // Create and sign the JWT token
+    const token = jwt.sign({ userId: newUser._id, email: newUser.email, role: newUser.role }, process.env.SECRET_KEY);
+    res.status(200).json({ token, userId: newUser._id, email: newUser.email, role: newUser.role });
   } catch (error) {
     res.status(500).json({ error: error, message: req.body });
   }
@@ -72,13 +75,13 @@ async function signIn(req, res) {
       return;
     }
 
-    // Check for empty values (for strings) in email and password
-    if (email.trim() === '' || password.trim() === '') {
-      res.status(400).json({ error: 'Email and password cannot be empty' });
-      return;
-    }
-    const hashedEmail = await bcrypt.hash(email, 10);
-    const user = await userSchema.findOne({ email: hashedEmail });
+// Check for empty values (for strings) in email and password
+if (email.trim() === '' || password.trim() === '') {
+  res.status(400).json({ error: 'Email and password cannot be empty' });
+  return;
+}
+;
+    const user = await userSchema.findOne({ email: email});
 
     if (!user) {
       res.status(401).json({ error: 'Invalid credentials' });
@@ -91,8 +94,8 @@ async function signIn(req, res) {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
-
-    res.json({ message: 'Sign-in successful' });
+    const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, process.env.SECRET_KEY);    
+    res.status(200).json({ token, userId: user._id, email: user.email, role: user.role });
   } catch (error) {
     res.status(500).json({ error: error });
   }

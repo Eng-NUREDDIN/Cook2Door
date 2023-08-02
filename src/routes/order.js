@@ -45,8 +45,10 @@ router.get('/', orderController.getAllOrders);
  *         description: Invalid request
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.post('/', orderController.addOrder);
+router.post('/',authMiddleware, orderController.addOrder);
 
 /**
  * @swagger
@@ -99,8 +101,10 @@ router.get('/:orderId', orderController.getOrderByOrderId);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.put('/:orderId', orderController.updateOrderByOrderId);
+router.put('/:orderId',authMiddleware, orderController.updateOrderByOrderId);
 
 /**
  * @swagger
@@ -121,8 +125,10 @@ router.put('/:orderId', orderController.updateOrderByOrderId);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.delete('/:orderId', orderController.removeOrder);
+router.delete('/:orderId',authMiddleware, orderController.removeOrder);
 
 /**
  * @swagger
@@ -145,8 +151,10 @@ router.delete('/:orderId', orderController.removeOrder);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId);
+router.get('/customerId/:customerId',authMiddleware, orderController.getAllOrdersByCustomerId);
 
 /**
  * @swagger
@@ -169,8 +177,10 @@ router.get('/customerId/:customerId', orderController.getAllOrdersByCustomerId);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.get('/cookId/:cookId', orderController.getAllOrdersByCookId);
+router.get('/cookId/:cookId',authMiddleware, orderController.getAllOrdersByCookId);
 
 /**
  * @swagger
@@ -198,8 +208,10 @@ router.get('/cookId/:cookId', orderController.getAllOrdersByCookId);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId);
+router.put('/:customerId/:orderId',authMiddleware, orderController.updateOrderByCustomerId);
 
 /**
  * @swagger
@@ -227,7 +239,9 @@ router.put('/:customerId/:orderId', orderController.updateOrderByCustomerId);
  *         description: Order not found
  *       500:
  *         description: Internal server error
+ *       401:
+ *         description: Unauthorized
  */
-router.put('/:orderId/:cookId/stateUpdate', orderController.updateOrderState);
+router.put('/:orderId/:cookId/stateUpdate',authMiddleware, orderController.updateOrderState);
 
 module.exports = router;
