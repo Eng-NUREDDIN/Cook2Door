@@ -264,8 +264,7 @@ async function updateOrderByOrderId(req, res) {
   const { orderId } = req.params;
   const { order_description, order_state } = req.body;
 
-  // For invalid Id
-  console.log(orderId);
+  // For invalid Id  
   if (!ObjectId.isValid(orderId)) {
     res.status(400).json({ message: 'Invalid order ID' });
     return;
