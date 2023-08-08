@@ -5,10 +5,10 @@ const { check } = require('express-validator');
 
 
 function authMiddleware(req, res, next) {  
-  console.log(req.headers);
+
 
   const token = req.header('Authorization');
-  console.log(req.header('Authorization'));
+
  
   
 
