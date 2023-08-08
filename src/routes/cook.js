@@ -16,15 +16,23 @@ const  authMiddleware  = require('../configuration/authMiddleware');
  * @swagger
  * /api/cook:
  *   get:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     summary: Get all cooks
  *     tags: [Cooks]
  *     responses:
  *       200:
  *         description: Success
- *      500:
- *        description: Internal Server Error
- *      401:
- *        description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *       401:
+ *         description: Unauthorized
  */
 router.get('/',authMiddleware, cookController.getAllCooks);
 
@@ -32,6 +40,14 @@ router.get('/',authMiddleware, cookController.getAllCooks);
  * @swagger
  * /api/cook/add:
  *   post:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     summary: Add a new cook
  *     tags: [Cooks]
  *     requestBody:
@@ -55,6 +71,14 @@ router.post('/add',authMiddleware, cookController.addCook);
  * @swagger
  * /api/cook/{id}:
  *   get:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     summary: Get a cook by ID
  *     tags: [Cooks]
  *     requestBody:
@@ -78,14 +102,21 @@ router.get('/:id',authMiddleware, cookController.getCookById);
  * @swagger
  * /api/cook/{id}:
  *   put:
+ *     security:
+ *     - bearerAuth: []
  *     summary: Update a cook by ID
  *     tags: [Cooks]
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -109,6 +140,14 @@ router.put('/:id',authMiddleware, cookController.updateCook);
  * @swagger
  * /api/cook/{id}:
  *   delete:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     summary: Delete a cook by ID
  *     tags: [Cooks]
  *     requestBody:

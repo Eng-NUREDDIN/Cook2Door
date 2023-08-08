@@ -10,6 +10,18 @@ const options = {
       description: 'API documentation for Cook2Door Project',
     },
     components: {
+      security : {
+        bearerAuth : []
+      }, 
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          in: 'header',
+          name: 'Authorization',
+          description: 'Bearer token to access these api endpoints',
+          scheme: 'bearer',
+          barerFormat: 'JWT',
+        },},
       schemas: {
         Dish_Add: {
           type: 'object',

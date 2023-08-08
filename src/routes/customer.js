@@ -4,6 +4,7 @@ const router = express.Router();
 const customerController = require('../controllers/customerController');
 
 const { validCustomer } = require('../validation/validator');
+const  authMiddleware  = require('../configuration/authMiddleware');
 
 /**
  * @swagger
@@ -15,6 +16,14 @@ const { validCustomer } = require('../validation/validator');
  * @swagger
  * /api/customer:
  *   get:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     tags: [Customer]
  *     summary: Get all customers
  *     responses:
@@ -57,12 +66,19 @@ router.post('/', validCustomer, customerController.addCustomer);
  *   get:
  *     tags: [Customer]
  *     summary: Get a customer by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -82,12 +98,19 @@ router.get('/:id',authMiddleware, customerController.getCustomerById);
  *   put:
  *     tags: [Customer]
  *     summary: Update a customer by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -114,12 +137,19 @@ router.put('/:id',authMiddleware, customerController.updateCustomer);
  *   delete:
  *     tags: [Customer]
  *     summary: Delete a customer by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: Customer successfully deleted

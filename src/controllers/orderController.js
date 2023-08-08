@@ -47,11 +47,6 @@ async function addOrder(req, res) {
     res.status(400).json({ message: 'Invalid customer ID' });
     return;
   }
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 39fac4203cdf70ef65cd1e5a80618dfdc28820c1
   
     // Check if the customer exists
 try{
@@ -73,11 +68,6 @@ try{
       return res.status(404).json({ error: 'customer not found' });
     }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 56f1bebeb76220aebba3d7336a38470979d1f1bd
->>>>>>> 39fac4203cdf70ef65cd1e5a80618dfdc28820c1
   try {
     // Check if the dish exists
     const resDish = await axios.get(

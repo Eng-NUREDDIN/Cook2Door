@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: ['COOK', 'CUSTOMER', 'ADMIN']
   },
+  token: {
+    type: String,
+    required: false,
+  },
 });
 
 // Hash the email and password before saving the user data
