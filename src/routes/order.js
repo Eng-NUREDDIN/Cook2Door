@@ -1,9 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
-
+const  authMiddleware  = require('../configuration/authMiddleware');
 const orderController = require('../controllers/orderController');
-//const { validOrder } = require('../validation/validator');
+
+
 
 /**
  * @swagger
@@ -30,6 +31,14 @@ router.get('/', orderController.getAllOrders);
  * @swagger
  * /api//Order/:
  *   post:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     tags: [Order]
  *     summary: Add a new Order
  *     requestBody:
@@ -56,12 +65,19 @@ router.post('/',authMiddleware, orderController.addOrder);
  *   get:
  *     tags: [Order]
  *     summary: Get a order by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: orderId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -80,12 +96,19 @@ router.get('/:orderId', orderController.getOrderByOrderId);
  *   put:
  *     tags: [Order]
  *     summary: Update a order by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: orderId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -112,12 +135,19 @@ router.put('/:orderId',authMiddleware, orderController.updateOrderByOrderId);
  *   delete:
  *     tags: [Order]
  *     summary: Delete a order by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: orderId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: Order successfully deleted
@@ -136,12 +166,19 @@ router.delete('/:orderId',authMiddleware, orderController.removeOrder);
  *   get:
  *     tags: [Customer]
  *     summary: get Orders by customerId
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: customerId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: JSON file including all orders by this customer
@@ -162,12 +199,19 @@ router.get('/customerId/:customerId',authMiddleware, orderController.getAllOrder
  *   get:
  *     tags: [Cooks]
  *     summary: get Orders by cookId
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: cookId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       201:
  *         description: JSON file including all orders by this cook
@@ -188,17 +232,24 @@ router.get('/cookId/:cookId',authMiddleware, orderController.getAllOrdersByCookI
  *   put:
  *     tags: [Customer]
  *     summary: Update order by customerId and orderId
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: customerId
- *         required: true
- *         schema:
- *           type: string
- *       - in: path
- *         name: orderId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: customerId
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
+ *     - in: path
+ *       name: orderId
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       201:
  *         description: updated order
@@ -219,17 +270,24 @@ router.put('/:customerId/:orderId',authMiddleware, orderController.updateOrderBy
  *   put:
  *     tags: [Customer]
  *     summary: Update the state of order
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: customerId
- *         required: true
- *         schema:
- *           type: string
- *       - in: path
- *         name: orderId
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: customerId
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
+ *     - in: path
+ *       name: orderId
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       201:
  *         description: updated order

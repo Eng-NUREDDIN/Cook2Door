@@ -95,6 +95,7 @@ if (email.trim() === '' || password.trim() === '') {
       return;
     }
     const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, process.env.SECRET_KEY);    
+    user.token = token;      
     res.status(200).json({ token, userId: user._id, email: user.email, role: user.role });
   } catch (error) {
     res.status(500).json({ error: error });

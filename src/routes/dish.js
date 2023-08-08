@@ -3,6 +3,7 @@ const router = express.Router();
 
 const dishController = require('../controllers/dishController');
 const { validDish } = require('../validation/validator');
+const  authMiddleware  = require('../configuration/authMiddleware');
 /**
  * @swagger
  * tags:
@@ -28,6 +29,14 @@ router.get('/', dishController.getAllDishes);
  * @swagger
  * /api/dish/add/:
  *   post:
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
  *     tags: [Dishes]
  *     summary: Add a new dish
  *     requestBody:
@@ -52,12 +61,19 @@ router.post('/add', authMiddleware, dishController.addDish);
  *   get:
  *     tags: [Dishes]
  *     summary: Get a dish by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: Successful operation
@@ -76,12 +92,19 @@ router.get('/:id', dishController.getDishById);
  *   put:
  *     tags: [Dishes]
  *     summary: Update a dish by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -108,12 +131,19 @@ router.put('/:id',authMiddleware, dishController.updateDish);
  *   delete:
  *     tags: [Dishes]
  *     summary: Delete a dish by ID
+ *     security:
+ *     - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     - name: Authorization
+ *       in: header
+ *       required: true
+ *       type: string
+ *       description: The authorization token
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *       type: string
  *     responses:
  *       200:
  *         description: Order successfully deleted
